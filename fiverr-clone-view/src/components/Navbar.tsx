@@ -93,7 +93,7 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
-            {active || pathname !== '/' &&
+            {active &&
                 <>
                     <hr className="w-full border-1 " />
                     <div className="w-[1400px] flex justify-between font-light">
