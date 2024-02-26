@@ -33,7 +33,9 @@ const Navbar = () => {
     }
 
     return (
-        <div className={`flex flex-col items-center transition ease-in-out delay-10 duration-500 sticky top-0 ${active || pathname !== '/' ? 'text-black bg-white' : 'text-white bg-[#0c4329]'}`}>
+        <div className={`flex flex-col items-center transition ease-in-out 
+        delay-10 duration-500 sticky top-0
+        ${active || pathname !== '/' ? 'text-black bg-white' : 'text-white bg-[#0c4329]'}`}>
             <div className="w-[1400px] flex justify-between pt-5 pb-5 items-center">
                 <div className="mr-auto">
                     <Link to="/">
@@ -93,10 +95,10 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
-            {active &&
+            {active || pathname !== "/" &&
                 <>
-                    <hr className="w-full border-1 " />
-                    <div className="w-[1400px] flex justify-between font-light">
+                    <hr className="w-full border-1 text-gray-500 " />
+                    <div className="w-[1400px] flex justify-between font-light p-2 ">
                         <Link to="/">
                             Graphics & Design
                         </Link>
@@ -125,6 +127,7 @@ const Navbar = () => {
                             Lifestyle
                         </Link>
                     </div>
+                    <hr className="w-full border-1 text-gray-500 " />
                 </>}
         </div>
 
