@@ -35,14 +35,15 @@ const Navbar = () => {
 
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-    // Function to toggle the menu
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    }
+
+
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setMenuOpen(false);
+                setMenuOpen(false)
+            }
+            else {
+                setMenuOpen(true)
             }
         }
 
@@ -56,7 +57,7 @@ const Navbar = () => {
         <>
             <div className={`z-20 flex flex-col items-center transition ease-in-out 
         delay-10 duration-500 sticky top-0
-        ${active || pathname !== '/' ? 'text-black bg-white' : 'text-white bg-[#0c4329]'}`}>
+        ${active || pathname !== '/' ? 'text-black bg-white' : 'text-white bg-[#013914]'}`}>
                 <div className="w-full max-w-[1400px] px-4 md:px-7 flex justify-between pt-5 pb-5 items-center">
                     <Logo />
                     <Menu className="md:hidden"
@@ -68,18 +69,15 @@ const Navbar = () => {
                         />
                     </div>
                 </div>
-
-                <div className="w-full" ref={menuRef}>
-                </div>
-                <div className="md:hidden">
+                <div className="md:hidden" ref={menuRef}>
                     <MobileMenu currentUser={currentUser}
                         menuOpen={menuOpen} />
                 </div>
 
-                {active || pathname !== "/" &&
+                {(active || pathname) !== "/" &&
                     <>
-                        <hr className="w-full border-1 text-gray-500 " />
-                        <div className="w-full max-w-[1400px] px-4 md:px-7 flex justify-between font-light p-2 ">
+                        <hr className="sm:hidden w-full border-1 text-gray-500 " />
+                        <div className="sm:hidden w-full max-w-[1400px] px-4 md:px-7 flex justify-between font-light p-2 ">
                             <Link to="/">
                                 Graphics & Design
                             </Link>
@@ -111,7 +109,7 @@ const Navbar = () => {
                         <hr className="w-full border-1 text-gray-500 " />
                     </>}
             </div>
-            ${menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
+            {menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
              bg-black opacity-50 z-10">
             </div>}
 
