@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react"
 import Logo from "./navbar/Logo"
 import RegularMenu from "./navbar/Regular-menu"
 import MobileMenu from "./navbar/Mobile-menu"
+import Extranavbar from "./navbar/Extra-navbar"
 
 
 
@@ -75,40 +76,7 @@ const Navbar = () => {
                         menuOpen={menuOpen} />
                 </div>
 
-                {(active || pathname) !== "/" &&
-                    <>
-                        <hr className="sm:hidden w-full border-1 text-gray-500 " />
-                        <div className="sm:hidden w-full max-w-[1400px] px-4 md:px-7 flex justify-between font-light p-2 ">
-                            <Link to="/">
-                                Graphics & Design
-                            </Link>
-                            <Link to="/">
-                                Video & Animation
-                            </Link>
-                            <Link to="/">
-                                Writing & Translation
-                            </Link>
-                            <Link to="/">
-                                AI Services
-                            </Link>
-                            <Link to="/">
-                                Digital Marketing
-                            </Link>
-                            <Link to="/">
-                                Music & Audio
-                            </Link>
-                            <Link to="/">
-                                Programming & Tech
-                            </Link>
-                            <Link to="/">
-                                Business
-                            </Link>
-                            <Link to="/">
-                                Lifestyle
-                            </Link>
-                        </div>
-                        <hr className="w-full border-1 text-gray-500 " />
-                    </>}
+                {(active || pathname) !== "/" && <Extranavbar/>}
             </div>
             {menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
              bg-black opacity-50 z-10">
