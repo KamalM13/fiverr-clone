@@ -40,10 +40,10 @@ const Navbar = () => {
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setMenuOpen(false)
+                setMenuOpen(false);
             }
             else {
-                setMenuOpen(true)
+                setMenuOpen(true);
             }
         }
 
@@ -69,6 +69,7 @@ const Navbar = () => {
                         />
                     </div>
                 </div>
+
                 <div className="md:hidden" ref={menuRef}>
                     <MobileMenu currentUser={currentUser}
                         menuOpen={menuOpen} />
