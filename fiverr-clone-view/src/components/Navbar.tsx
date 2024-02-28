@@ -57,9 +57,9 @@ const Navbar = () => {
     return (
         <>
             <div className={`z-20 flex flex-col items-center transition ease-in-out 
-        delay-10 duration-500 sticky top-0
+        delay-10 duration-500 sticky top-0 
         ${active || pathname !== '/' ? 'text-black bg-white' : 'text-white bg-[#013914]'}`}>
-                <div className="w-full max-w-[1400px] px-4 md:px-7 flex justify-between pt-5 pb-5 items-center">
+                <div className="w-full px-4 md:px-7 flex justify-between pt-5 pb-5 items-center">
                     <Logo />
                     <Menu className="md:hidden"
                         onClick={() => setMenuOpen(!menuOpen)}
@@ -71,7 +71,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className="md:hidden" ref={menuRef}>
+                <div className="md:hidden " ref={menuRef}>
                     <MobileMenu 
                         menuOpen={menuOpen} />
                 </div>

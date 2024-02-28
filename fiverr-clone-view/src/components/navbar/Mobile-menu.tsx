@@ -15,7 +15,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({  menuOpen }) => {
 
     const items = ["Graphics And Design","Guides","Learn","Logo Maker","Community","Podcast","Blog","Fiverr Workspace"]
     return (
-        <div className={`h-full overflow-scroll w-[50%] bg-white top-0 right-0 fixed 
+        <div className={`h-full overflow-scroll w-[75%] bg-white top-0 right-0 fixed 
             pt-6 pr-6 pl-6  text-md text-gray-700 shadow-xl ease-in-out duration-300
             ${menuOpen ? "translate-x-0 " : "translate-x-full"}`}>
             <div className='py-4'>

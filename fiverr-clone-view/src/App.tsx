@@ -14,8 +14,8 @@ function App() {
 
   const Layout = () => { 
     return (
-      <div className="overflow-hidden">
-        <Navbar />
+      <div className="overflow-hidden md:overflow-clip">
+        <Navbar  />
         <Outlet/>
         <Footer />
       </div>
