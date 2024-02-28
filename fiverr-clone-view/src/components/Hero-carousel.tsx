@@ -41,7 +41,7 @@ export function HeroCarousel() {
 
 
     return (
-        <div className="flex justify-center pt-7">
+        <div className="flex  justify-center pt-7">
             <Carousel
                 opts={{
                     align: "start",
