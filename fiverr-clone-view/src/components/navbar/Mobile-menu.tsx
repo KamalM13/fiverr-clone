@@ -7,11 +7,11 @@ import CustomAccordion from '../custom-components/CustomAccordion';
 
 
 interface MobileMenuProps {
-    currentUser: any;
+    
     menuOpen: boolean;
 }
 
-const MobileMenu: React.FC<MobileMenuProps> = ({ currentUser, menuOpen }) => {
+const MobileMenu: React.FC<MobileMenuProps> = ({  menuOpen }) => {
 
     const items = ["Graphics And Design","Guides","Learn","Logo Maker","Community","Podcast","Blog","Fiverr Workspace"]
     return (

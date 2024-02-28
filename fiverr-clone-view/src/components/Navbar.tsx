@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 //Customization
 import { Menu } from "lucide-react"
@@ -72,7 +72,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="md:hidden" ref={menuRef}>
-                    <MobileMenu currentUser={currentUser}
+                    <MobileMenu 
                         menuOpen={menuOpen} />
                 </div>
 
