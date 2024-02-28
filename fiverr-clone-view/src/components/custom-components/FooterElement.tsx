@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 interface FooterElementProps {
     title: string,
@@ -11,8 +12,11 @@ const FooterElement = ({ title, subtitle }: FooterElementProps) => {
                 {title}
             </div>
             {subtitle.map((subtitles, index) => (
-                <div key={index} className="text-sm font-[500px] text-[#74767e]">
+                
+                <div key={index} className="text-sm font-[500px] text-[#74767e] hover:bg-[#f8f7f7] py-1 px-2 rounded-[5px]">
+                    <Link to={"/gigs"}>
                         {subtitles}
+                    </Link>
                 </div>
             ))}
         </div>

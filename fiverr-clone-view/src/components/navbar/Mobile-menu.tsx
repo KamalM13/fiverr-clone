@@ -43,6 +43,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({  menuOpen }) => {
                 <Link to="/" className="block hover:bg-[#f5f5f5] py-3 pl-1 rounded">
                     Home
                 </Link>
+                <Link to="/gigs" className="block hover:bg-[#f5f5f5] py-3 pl-1 rounded">
+                    Gigs
+                </Link>
             </div>
 
         </div>
