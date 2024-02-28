@@ -42,6 +42,7 @@ const Gigs = () => {
       <div className="p-3 md:pl-8 font-bold text-lg py-4">
         Most Popular Gigs in <span className="text-blue-600">Illustration</span>
       </div>
+      {/* //Mobile Gig card */}
       <div className="md:hidden flex flex-col">
         
         <GigsCard />
@@ -52,6 +53,9 @@ const Gigs = () => {
         <GigsCard />
         <GigsCard />
       </div>
+
+      {/* // Desktop Gig card */}
+      
       <div className="hidden md:flex justify-center pt-7">
         <Gigscard />
       </div>
