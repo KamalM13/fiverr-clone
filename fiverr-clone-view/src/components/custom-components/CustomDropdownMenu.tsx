@@ -2,7 +2,6 @@ import React from 'react';
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { ChevronDown } from 'lucide-react';

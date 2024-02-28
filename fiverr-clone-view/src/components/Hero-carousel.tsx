@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
     Carousel,
     CarouselContent,
@@ -7,6 +6,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Link } from "react-router-dom"
+import { Card } from "./ui/card"
 
 
 
@@ -70,10 +70,5 @@ export function HeroCarousel() {
                 <CarouselNext />
             </Carousel>
         </div>
-        // <div className="slide">
-        //     <div className="container">
-
-        //     </div>
-        // </div>
     )
 }

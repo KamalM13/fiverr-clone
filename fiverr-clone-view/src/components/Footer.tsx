@@ -1,8 +1,15 @@
+import Secondpart from "./footer/Secondpart"
+import Firstpart from "./footer/Firstpart"
 
 
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <>
+      <Firstpart />
+      <hr />
+      <Secondpart />
+    </>
+
   )
 }
 
