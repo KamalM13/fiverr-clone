@@ -47,11 +47,11 @@ export function HeroCarousel() {
                     align: "start",
                     loop: true,
                 }}
-                className="w-full max-w-4xl"
+                className="max-w-3xl"
             >
                 <CarouselContent>
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <CarouselItem key={index} className="md:basis-[25%] lg:basis-1/3 sm:basis-[15%]">
+                        <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 sm:basis-[80%]">
                             <div className="p-1 relative">
                                 <Card>
                                     <Link to="/">
