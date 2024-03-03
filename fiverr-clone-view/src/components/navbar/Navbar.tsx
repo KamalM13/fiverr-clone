@@ -77,7 +77,9 @@ const Navbar = () => {
                 </div>
 
                 {(active || pathname) !== "/" && <Extranavbar />}
+
             </div>
+            <hr className="border-1" />
             {menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
              bg-black opacity-50 z-10">
             </div>}
