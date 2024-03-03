@@ -1,8 +1,8 @@
-import CustomCarousel from "@/components/CustomCarousel"
-import Featured from "@/components/Featured"
+import CustomCarousel from "@/components/custom-components/CustomCarousel"
+import Featured from "@/components/heropage/Featured"
 
-import HeroMarketing from "@/components/Hero-marketing"
-import Trustedby from "@/components/Trustedby"
+import HeroMarketing from "@/components/heropage/Hero-marketing"
+import Trustedby from "@/components/heropage/Trustedby"
 
 
 

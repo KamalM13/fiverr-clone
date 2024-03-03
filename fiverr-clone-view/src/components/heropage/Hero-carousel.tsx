@@ -6,7 +6,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Link } from "react-router-dom"
-import { Card } from "./ui/card"
+import { Card } from "../ui/card"
 
 
 

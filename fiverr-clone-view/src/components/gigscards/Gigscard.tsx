@@ -1,4 +1,12 @@
 import { Circle, Heart, Star } from "lucide-react"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel"
+
 
 const Gigscard = () => {
 
@@ -35,8 +43,21 @@ const Gigscard = () => {
                 <Heart className="absolute top-6 right-4 cursor-pointer text-black opacity-30" fill="#ffe0b3" strokeWidth={3} />
                 <Heart className="absolute top-6 right-4 cursor-pointer text-white" fill="#ffe0b3" strokeWidth={2} />
             </div>
-            <div className="bg-red-500 rounded-[10px] border-[1px] shadow-sm">
-                <img src="./public/img/man.png" className="w-[220px] h-[140px] " />
+            <div className="rounded-[10px] border-[1px] shadow-sm">
+                <Carousel className=" max-w-[220px]">
+                    <CarouselContent>
+                        {Array.from({ length: 5 }).map((_, index) => (
+                            <CarouselItem key={index} className="">
+                                <div className="p-1 w-[220px]">
+                                    <img src="./public/img/man.png" className="w-[220px] h-[140px] bg-red-500 " alt="photo" />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                </Carousel>
+
             </div>
             <div className="flex justify-between items-center font-bold text-sm">
                 <div className="flex items-center gap-x-1 font-bold">

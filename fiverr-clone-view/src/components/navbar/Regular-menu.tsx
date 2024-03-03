@@ -33,7 +33,7 @@ const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
                 <Link to='/'>Become a Seller</Link>
             </>
             }
-            {currentUser ? (
+            {currentUser.username ==='test' ? (
                 <UserDropDown
                     triggerText="Profile"
                     items={[

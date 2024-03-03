@@ -1,5 +1,5 @@
-import Secondpart from "./footer/Secondpart"
-import Firstpart from "./footer/Firstpart"
+import Secondpart from "./Secondpart"
+import Firstpart from "./Firstpart"
 
 
 const Footer = () => {

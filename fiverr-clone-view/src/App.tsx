@@ -4,19 +4,19 @@ import {
   Outlet,
 } from "react-router-dom";
 
-import Navbar from "./components/Navbar"
-import Footer from "./components/Footer";
+import Navbar from "./components/navbar/Navbar"
+import Footer from "./components/footer/Footer";
 import { Home } from "./pages/home";
 import Gigs from "./pages/gigs";
 
 
 function App() {
 
-  const Layout = () => { 
+  const Layout = () => {
     return (
       <div className="">
-        <Navbar  />
-        <Outlet/>
+        <Navbar />
+        <Outlet />
         <Footer />
       </div>
     )
@@ -29,7 +29,7 @@ function App() {
       element: <Layout />,
       children: [
         { path: "/", element: <Home /> },
-        {path: "/gigs", element: <Gigs/>}
+        { path: "/gigs", element: <Gigs /> }
       ]
     },
   ]);

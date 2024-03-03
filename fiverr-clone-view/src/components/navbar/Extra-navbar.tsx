@@ -1,40 +1,56 @@
 import { Link } from "react-router-dom"
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card"
+
 
 
 const Extranavbar = () => {
+
+    const objects = ["Graphics & Design", "Video & Animation", "Writing & Translation", "AI Services", "Digital Marketing",
+        "Music & Audio", "Programming & Tech", "Business", "Lifestyle"]
+
     return (
         <>
-            <hr className="hidden md:inline w-full border-1 text-gray-500 " />
-            <div className="hidden md:flex w-full max-w-[1400px] px-4 md:px-7 justify-between font-light p-2 ">
-                <Link to="/">
-                    Graphics & Design
-                </Link>
-                <Link to="/">
-                    Video & Animation
-                </Link>
-                <Link to="/">
-                    Writing & Translation
-                </Link>
-                <Link to="/">
-                    AI Services
-                </Link>
-                <Link to="/">
-                    Digital Marketing
-                </Link>
-                <Link to="/">
-                    Music & Audio
-                </Link>
-                <Link to="/">
-                    Programming & Tech
-                </Link>
-                <Link to="/">
-                    Business
-                </Link>
-                <Link to="/">
-                    Lifestyle
-                </Link>
+            <hr className="hidden md:inline w-full border-1 " />
+            <div className="hidden md:flex w-full max-w-[1400px] px-4 md:px-7 justify-between text-gray-500 pt-2">
+                {objects.map((object, _) => (
+                    <HoverCard>
+                        <HoverCardTrigger className="cursor-pointer hover:border-b-4 border-green-500 pb-2 hover:pb-1">{object}</HoverCardTrigger>
+                        <HoverCardContent >
+                            <div className="flex flex-col">
+                                <div className="bg-white w-screen max-w-[1400px] flex justify-between items-center gap-x-10 p-3">
+                                    {Array.from({ length: 4 }).map((_, index) => (
+                                        <>
+                                            <div className="flex flex-col gap-y-2 p-2 text-lg" key={index}>
+                                                <p className="font-bold">Logo & Brand Identity</p>
+                                                {Array.from({ length: 5 }).map((_, index) => (
+                                                    <Link to='/' key={index} className="hover:text-gray-400"> Logo Design</Link>
+                                                ))}
+                                            </div>
+                                        </>
+                                    ))}
+                                </div>
+                                <div className="bg-white w-screen max-w-[1400px] flex justify-between items-center gap-x-10 p-3">
+                                    {Array.from({ length: 4 }).map((_, index) => (
+                                        <>
+                                            <div className="flex flex-col  gap-y-2 p-2 text-lg" key={index}>
+                                                <p className="font-bold">Logo & Brand Identity</p>
+                                                {Array.from({ length: 5 }).map((_, index) => (
+                                                    <Link to='/' key={index} className="hover:text-gray-400"> Logo Design</Link>
+                                                ))}
+                                            </div>
+                                        </>
+                                    ))}
+                                </div>
+                            </div>
+                        </HoverCardContent>
+                    </HoverCard>
+
+                ))}
             </div>
-            <hr className="w-full border-1 text-gray-500 " />
         </>
     )
 }

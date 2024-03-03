@@ -1,6 +1,6 @@
-import Gigscard from "@/components/Gigscard"
-import GigsCard from "@/components/Gigsmobilecard"
-import Gigspormotion from "@/components/Gigspormotion"
+import Gigscard from "@/components/gigscards/Gigscard"
+import GigsCard from "@/components/gigscards/Gigsmobilecard"
+import Gigspormotion from "@/components/gigspormotion/Gigspormotion"
 
 
 

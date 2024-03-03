@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom"
 import { Menu } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
-import Logo from "./navbar/Logo"
-import RegularMenu from "./navbar/Regular-menu"
-import MobileMenu from "./navbar/Mobile-menu"
-import Extranavbar from "./navbar/Extra-navbar"
+import Logo from "./Logo"
+import RegularMenu from "./Regular-menu"
+import MobileMenu from "./Mobile-menu"
+import Extranavbar from "./Extra-navbar"
 
 
 
@@ -72,11 +72,11 @@ const Navbar = () => {
                 </div>
 
                 <div className="md:hidden" ref={menuRef}>
-                    <MobileMenu 
+                    <MobileMenu
                         menuOpen={menuOpen} />
                 </div>
 
-                {(active || pathname) !== "/" && <Extranavbar/>}
+                {(active || pathname) !== "/" && <Extranavbar />}
             </div>
             {menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
              bg-black opacity-50 z-10">

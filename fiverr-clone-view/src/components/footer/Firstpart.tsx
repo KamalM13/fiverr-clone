@@ -1,5 +1,5 @@
 import CustomAccordion from "../custom-components/CustomAccordion"
-import FooterElement from "../custom-components/FooterElement"
+import FooterElement from "./FooterElement"
 
 const Firstpart = () => {
 
