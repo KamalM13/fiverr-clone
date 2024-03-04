@@ -1,4 +1,4 @@
-import { Heart, } from "lucide-react"
+import { Heart } from "lucide-react"
 import {
     Carousel,
     CarouselContent,
@@ -22,10 +22,6 @@ const Gigscard = () => {
 
     return (
         <div className="relative flex flex-col space-y-3 ">
-            <div className=" ">
-                <Heart className="absolute top-6 right-4 cursor-pointer text-black opacity-30" fill="#ffe0b3" strokeWidth={3} />
-                <Heart className="absolute top-6 right-4 cursor-pointer text-white" fill="#ffe0b3" strokeWidth={2} />
-            </div>
             <div className="rounded-[10px] shadow-sm">
                 <Carousel className=" max-w-[220px] group relative">
                     <CarouselContent>
@@ -41,6 +37,10 @@ const Gigscard = () => {
                     <CarouselNext className="absolute right-2 hidden group-hover:flex" />
                 </Carousel>
 
+            </div>
+            <div>
+                <Heart className="absolute top-2 right-2 cursor-pointer text-white"  strokeWidth={2} />
+                <Heart className="absolute top-2 right-2 cursor-pointer text-white opacity-35" fill=""  strokeWidth={2} />
             </div>
             <GigsCardDetails details={details} />
         </div>

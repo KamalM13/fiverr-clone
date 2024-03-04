@@ -48,9 +48,9 @@ const Extranavbar = () => {
                             </div>
                         </HoverCardContent>
                     </HoverCard>
-
                 ))}
             </div>
+            <hr className="hidden md:inline w-full border-1 " />
         </>
     )
 }

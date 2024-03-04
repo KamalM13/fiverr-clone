@@ -16,8 +16,8 @@ interface GigsCardDetailsProps {
 
 const GigsCardDetails = ({ details }: GigsCardDetailsProps) => {
     return (
-        <div>
-            <div className="flex justify-between items-center font-bold text-sm">
+        <div className="flex flex-col gap-y-2">
+            <div className="flex justify-between items-center font-bold text-xs">
                 <div className="flex items-center gap-x-1 font-bold">
                     <Circle size={18} fill="" />
                     <span>{details.name}</span>
@@ -26,11 +26,11 @@ const GigsCardDetails = ({ details }: GigsCardDetailsProps) => {
                     {details.ratingType}
                 </div>
             </div>
-            <div className="max-w-[220px] text-wrap text-main">
+            <div className="max-w-[220px] max-h-[100px] line-clamp-2  text-main text-sm">
                 {details.description}
             </div>
-            <div className="flex items-center gap-x-1">
-                <Star size={18} fill="" />
+            <div className="flex items-center gap-x-1 font-bold text-sm">
+                <Star size={14} fill="" />
                 <div className="rating">
                     {details.rating}
                 </div>

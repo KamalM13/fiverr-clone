@@ -44,7 +44,6 @@ const Gigs = () => {
       </div>
       {/* //Mobile Gig card */}
       <div className="md:hidden flex flex-col">
-        
         <GigsCard />
         <GigsCard />
         <GigsCard />
@@ -56,7 +55,7 @@ const Gigs = () => {
 
       {/* // Desktop Gig card */}
       
-      <div className="hidden md:flex justify-center pt-7">
+      <div className="hidden md:flex justify-center gap-x-3">
         <Gigscard />
       </div>
     </>

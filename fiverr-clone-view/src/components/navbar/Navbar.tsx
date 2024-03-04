@@ -1,24 +1,18 @@
 import { useLocation } from "react-router-dom"
 
 //Customization
-import { Bell, Heart, Mail, Menu, Search, User } from "lucide-react"
+import {  Menu, User } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 
 import Logo from "./Logo"
 import RegularMenu from "./Regular-menu"
 import MobileMenu from "./Mobile-menu"
 import Extranavbar from "./Extra-navbar"
+import Gigsnavbar from "./Gigsnavbar"
+import GigsIconDropdown from "./GigsIconDropdown"
 
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuIndicator,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-    NavigationMenuViewport,
-} from "@/components/ui/navigation-menu"
+
+
 
 
 
@@ -66,6 +60,9 @@ const Navbar = () => {
         };
     }, [menuRef]);
 
+
+
+
     return (
         <>
             <div className={`z-20 flex flex-col items-center transition ease-in-out 
@@ -80,52 +77,8 @@ const Navbar = () => {
                     {/* Regular Menu  */}
                     {pathname === '/gigs' ? (
                         <div className="hidden md:flex items-center gap-x-7">
-                            <div className="flex items-center">
-                                <input className="border-[1px] border-r-0 rounded-l-[5px] w-screen max-w-[550px] p-2"
-                                    placeholder="What service are you looking for today?" />
-                                <div className="bg-black p-2 border-[1px] border-black rounded-r-[5px]">
-                                    <Search className="text-white" />
-                                </div>
-                            </div>
-                            <div className="font-semibold">
-                                <NavigationMenu>
-                                    <NavigationMenuList>
-                                        <NavigationMenuItem>
-                                            <NavigationMenuTrigger className="text-md">Fiverr Pro</NavigationMenuTrigger>
-                                            <NavigationMenuContent className="bg-white w-screen">
-                                                <div className="w-screen max-w-[360px] flex flex-col p-4 space-y-3">
-                                                    <div className="flex gap-x-5 items-center border-[1px] rounded-[5px] p-3">
-                                                        <div className="p-3">
-                                                            <Search />
-                                                        </div>
-
-                                                        <div className="flex flex-col gap-y-1">
-                                                            <span className="text-sm text-main">I'm Looking to Hire</span>
-                                                            <span className="text-xs text-main2">I'd like to work with Pro freelancers and agencies while using free business tools</span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex gap-x-5 items-center border-[1px] rounded-[5px] p-3">
-                                                        <div className="p-3">
-                                                            <Search />
-                                                        </div>
-
-                                                        <div className="flex flex-col gap-y-1">
-                                                            <span className="text-sm text-main">I'm Looking to Hire</span>
-                                                            <span className="text-xs text-main2">I'd like to work with Pro freelancers and agencies while using free business tools</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </NavigationMenuContent>
-                                        </NavigationMenuItem>
-                                    </NavigationMenuList>
-                                </NavigationMenu>
-
-                            </div>
-                            <div className="flex items-center text-main2 gap-x-6">
-                                <Bell size={20} />
-                                <Mail size={20} />
-                                <Heart size={20} />
-                            </div>
+                            <Gigsnavbar />
+                            <GigsIconDropdown />
                             <div className="text-main2 font-semibold">
                                 Orders
                             </div>
