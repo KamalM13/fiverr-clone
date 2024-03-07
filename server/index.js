@@ -1,9 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import dotenv, { populate } from 'dotenv';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
-//Routers
+//Routes
 import authRoute from './routes/auth.route.js';
+import userRoute from './routes/user.route.js';
 
 
 const app = express();
@@ -19,8 +22,22 @@ const connect = async () => {
     }
 }
 
-app.use("/api/auth", authRoute)
+//Middleware
+app.use(express.json());
+app.use(cookieParser());
 
+
+
+app.use("/server/auth", authRoute)
+app.use("/server/users", userRoute)
+
+
+app.use((err, req, res, next) => {
+    const errorStatus = err.status || 500;
+    const errorMessage = err.message || "Something went wrong";
+
+    res.status(errorStatus).send(errorMessage);
+})
 
 app.listen(3000, () => {
     connect();

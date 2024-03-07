@@ -1,20 +1,53 @@
-import User from '../models/user.model.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-export const register = async (req, res) => {
+import User from '../models/user.model.js';
+import createError from '../utils/createError.js';
+
+export const register = async (req, res, next) => {
 
     try {
+        const hash = await bcrypt.hashSync(req.body.password, 10);
+
         const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            country: req.body.country,
+            ...req.body,
+            password: hash,
         })
 
         await newUser.save();
         res.status(201).send(newUser);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+    } catch (err) {
+        next(err)
     }
 }
-export const login = async (req, res) => { }
-export const logout = async (req, res) => { }
+export const login = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ username: req.body.username });
+        if (!user) next(createError(404, "User not found"));
+
+        const validPassword = await bcrypt.compareSync(req.body.password, user.password);
+        if (!validPassword) next(createError(400, "Invalid credentials"));
+
+        const token = jwt.sign({
+            id: user._id,
+            isSeller: user.isSeller,
+        }, process.env.SECRET_KEY, { expiresIn: "1h" });
+
+        const { password, ...info } = user._doc;
+        res.cookie("accessToken", token, {
+            httpOnly: true,
+        }).status(200).json(info);
+
+    } catch (error) {
+        next(error);
+    }
+}
+export const logout = async (req, res) => {
+
+    if (!req.cookies.accessToken) return res.status(400).send("You are not logged in");
+    
+    res.clearCookie("accessToken", {
+        sameSite: "none",
+        secure: true,
+    }).status(200).send("Logged out");
+}
