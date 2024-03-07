@@ -9,14 +9,18 @@ export const register = async (req, res, next) => {
     try {
         const hash = await bcrypt.hashSync(req.body.password, 10);
 
+        const user = await User.findOne({ username: req.body.username });
+        if (user) return next(createError(401, "Username already exists"));
+
         const newUser = new User({
             ...req.body,
             password: hash,
         })
-
+        
         await newUser.save();
         res.status(201).send(newUser);
     } catch (err) {
+        console.log(err);
         next(err)
     }
 }

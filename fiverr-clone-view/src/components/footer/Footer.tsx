@@ -1,11 +1,13 @@
 import Secondpart from "./Secondpart"
 import Firstpart from "./Firstpart"
+import { useLocation } from "react-router-dom"
 
 
 const Footer = () => {
+  const { pathname } = useLocation()
   return (
     <>
-      <Firstpart />
+      {pathname === '/login' ? (<span></span>) : (<Firstpart />)}
       <hr />
       <Secondpart />
     </>

@@ -24,7 +24,7 @@ const UserDropDown: React.FC<UserDropDownProps> = ({ triggerText, items }) => {
             <DropdownMenuTrigger>{triggerText}</DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white flex-col p-3 space-y-1">
                 {items.map((item, index) => (
-                    <Link to={item.linkTo}>
+                    <Link to={item.linkTo} key={index}>
                         <DropdownMenuItem key={index} onClick={item.onClick} className="text-lg text-gray-700 hover:text-green-500">{item.label}</DropdownMenuItem>
                     </Link>
                 ))}

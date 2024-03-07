@@ -8,6 +8,7 @@ import Navbar from "./components/navbar/Navbar"
 import Footer from "./components/footer/Footer";
 import { Home } from "./pages/home";
 import Gigs from "./pages/gigs";
+import Login from "./pages/login";
 
 
 function App() {
@@ -29,7 +30,8 @@ function App() {
       element: <Layout />,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/gigs", element: <Gigs /> }
+        { path: "/gigs", element: <Gigs /> },
+        { path: "/login", element: <Login/>},
       ]
     },
   ]);

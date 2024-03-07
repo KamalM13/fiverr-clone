@@ -1,8 +1,9 @@
 import { useLocation } from "react-router-dom"
 
 //Customization
-import {  Menu, User } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { Menu, User } from "lucide-react"
+import { useEffect, useRef, useState, } from "react"
+import { useCookies } from "react-cookie"
 
 import Logo from "./Logo"
 import RegularMenu from "./Regular-menu"
@@ -12,14 +13,11 @@ import Gigsnavbar from "./Gigsnavbar"
 import GigsIconDropdown from "./GigsIconDropdown"
 
 
-
-
-
-
-
 const Navbar = () => {
 
     const [active, setactive] = useState(false)
+    const [cookies, removeCookie] = useCookies(["access_token"]);
+    const username = localStorage.getItem("username");
 
     const { pathname } = useLocation()
 
@@ -36,7 +34,7 @@ const Navbar = () => {
 
     const currentUser = {
         id: 1,
-        username: 'test',
+        username: 'hi',
         isSeller: false
     }
 
@@ -99,7 +97,7 @@ const Navbar = () => {
                         menuOpen={menuOpen} />
                 </div>
 
-                {(active || pathname) !== "/" && <Extranavbar />}
+                {(active || pathname) !== "/" && pathname !== '/login' && <Extranavbar />}
 
             </div>
             <hr className="border-1" />

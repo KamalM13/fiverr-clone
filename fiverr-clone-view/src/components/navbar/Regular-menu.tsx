@@ -1,6 +1,6 @@
 import { Globe } from "lucide-react";
 import CustomDropdownMenu from "../custom-components/CustomDropdownMenu";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UserDropDown from "../custom-components/UserDropDown";
 import { Button } from "../ui/button";
 
@@ -10,6 +10,7 @@ interface RegularMenuProps {
 }
 
 const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
+    const { pathname } = useLocation()
     return (
         <div className="hidden md:flex gap-6 items-center font-semibold text-lg">
             <div>
@@ -33,7 +34,7 @@ const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
                 <Link to='/'>Become a Seller</Link>
             </>
             }
-            {currentUser.username ==='test' ? (
+            {currentUser && pathname === '/login' ? (
                 <UserDropDown
                     triggerText="Profile"
                     items={[
@@ -56,9 +57,10 @@ const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
                     ]}
                 />
             ) : (
+                    
                 <>
                     <Button variant="outline" size={'sm'} className="hover:bg-green-600 hover:text-white font-bold rounded-xl">Join</Button>
-                    <Link to='/'>Sign in</Link>
+                    <Link to='/login'>Sign in</Link>
                 </>
             )}
         </div>
