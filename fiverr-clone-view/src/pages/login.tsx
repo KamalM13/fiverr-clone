@@ -107,8 +107,10 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[640px] flex justify-center items-center">
+    <div className="h-[740px] flex  justify-center ">
       <Tabs defaultValue="register" className="w-[400px]">
+        <br />
+        <br />
         <TabsList className="grid w-full grid-cols-2 bg-black text-white rounded shadow-md shadow-green-100" >
           <TabsTrigger value="register" className="rounded">Register</TabsTrigger>
           <TabsTrigger value="login">Login</TabsTrigger>
