@@ -85,7 +85,7 @@ const Login = () => {
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { username, password} = formState;
+    const { username, password } = formState;
     const newErrors = validateForm(formState);
     
     try {
