@@ -9,6 +9,7 @@ import Footer from "./components/footer/Footer";
 import { Home } from "./pages/home";
 import Gigs from "./pages/gigs";
 import Login from "./pages/login";
+import CompleteProfile from "./pages/completeProfile";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         { path: "/", element: <Home /> },
         { path: "/gigs", element: <Gigs /> },
         { path: "/login", element: <Login/>},
+        { path: "/completeProfile", element: <CompleteProfile/>},
       ]
     },
   ]);
