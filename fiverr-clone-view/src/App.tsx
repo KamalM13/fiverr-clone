@@ -3,6 +3,12 @@ import {
   RouterProvider,
   Outlet,
 } from "react-router-dom";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+
 
 import Navbar from "./components/navbar/Navbar"
 import Footer from "./components/footer/Footer";
@@ -12,15 +18,20 @@ import Login from "./pages/login";
 import CompleteProfile from "./pages/completeProfile";
 
 
+
+const queryClient = new QueryClient()
+
 function App() {
 
   const Layout = () => {
     return (
-      <div className="">
-        <Navbar />
-        <Outlet />
-        <Footer />
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <div className="">
+          <Navbar />
+          <Outlet />
+          <Footer />
+        </div>
+      </QueryClientProvider>
     )
   }
 
@@ -32,8 +43,8 @@ function App() {
       children: [
         { path: "/", element: <Home /> },
         { path: "/gigs", element: <Gigs /> },
-        { path: "/login", element: <Login/>},
-        { path: "/completeProfile", element: <CompleteProfile/>},
+        { path: "/login", element: <Login /> },
+        { path: "/completeProfile", element: <CompleteProfile /> },
       ]
     },
   ]);

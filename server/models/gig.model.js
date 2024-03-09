@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const gigSchema = new Schema({
-    seller: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+    userId: {
+        type: String,
+        required: true,
     },
     title: {
         type: String,

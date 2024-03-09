@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 //Routes
 import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
+import gigRoute from './routes/gigs.route.js';
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(cors({
 
 app.use("/server/auth", authRoute)
 app.use("/server/users", userRoute)
+app.use("/server/gigs", gigRoute)
 
 
 app.use((err, req, res, next) => {

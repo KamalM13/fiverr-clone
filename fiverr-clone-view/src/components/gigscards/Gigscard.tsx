@@ -7,28 +7,25 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import GigsCardDetails from "./GigsCardDetails"
+import { GigCardProps } from "../../types/gig.ts"
 
+const Gigscard = ({ gig }: GigCardProps) => {
 
-const Gigscard = () => {
-
-    const details = {
-        "name": 'John doe',
-        "ratingType": 'Top rated',
-        "description": 'I will create 2d animated explainer video or sale video',
-        "rating": 4.9,
-        "servedCustomers": "10k",
-        "price": "$50"
-    }
 
     return (
-        <div className="relative flex flex-col space-y-3 ">
-            <div className="rounded-[10px] shadow-sm">
-                <Carousel className=" max-w-[220px] group relative">
+        <div className="relative flex flex-col justify-center space-y-3 max-w-[220px] ">
+            <div className="w-[220px] rounded-[10px] shadow-sm">
+                <Carousel className="  group relative">
                     <CarouselContent>
                         {Array.from({ length: 5 }).map((_, index) => (
                             <CarouselItem key={index} className="">
-                                <div className="w-[220px] ">
-                                    <img src="./public/img/man.png" className="rounded-[10px] w-[220px] h-[140px] bg-red-500 " alt="photo" />
+                                <div className="w-[220px]">
+                                    {<img
+                                        src={gig.imgs[index]}
+                                        alt={gig.shortTitle}
+                                        className="w-[220px] h-[150px] object-cover rounded-t-[10px]"
+                                    />
+                                    }
                                 </div>
                             </CarouselItem>
                         ))}
@@ -39,10 +36,10 @@ const Gigscard = () => {
 
             </div>
             <div>
-                <Heart className="absolute top-2 right-2 cursor-pointer text-white"  strokeWidth={2} />
-                <Heart className="absolute top-2 right-2 cursor-pointer text-white opacity-35" fill=""  strokeWidth={2} />
+                <Heart className="absolute top-2 right-2 cursor-pointer text-white" strokeWidth={2} />
+                <Heart className="absolute top-2 right-2 cursor-pointer text-white opacity-35" fill="" strokeWidth={2} />
             </div>
-            <GigsCardDetails details={details} />
+            <GigsCardDetails gig={gig} />
         </div>
     )
 }
