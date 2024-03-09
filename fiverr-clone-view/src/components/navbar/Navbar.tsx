@@ -3,8 +3,9 @@ import { useLocation } from "react-router-dom"
 //Customization
 import { Menu, User } from "lucide-react"
 import { useEffect, useRef, useState, } from "react"
-import { useCookies } from "react-cookie"
+//import { useCookies } from "react-cookie"
 
+//Components
 import Logo from "./Logo"
 import RegularMenu from "./Regular-menu"
 import MobileMenu from "./Mobile-menu"
@@ -16,8 +17,8 @@ import GigsIconDropdown from "./GigsIconDropdown"
 const Navbar = () => {
 
     const [active, setactive] = useState(false)
-    const [cookies, removeCookie] = useCookies(["access_token"]);
-    const username = localStorage.getItem("username");
+    //const [cookies, removeCookie] = useCookies(["access_token"]);
+    //const username = localStorage.getItem("username");
 
     const { pathname } = useLocation()
 
