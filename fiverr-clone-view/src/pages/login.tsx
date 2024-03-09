@@ -34,7 +34,7 @@ const Login = () => {
 
   const [error, setError] = useState<string[]>();
   const [backError,setBackError] = useState<string>();
-  const [isSuccess, setIsSuccess] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleCountryChange = (country: string) => {
@@ -73,20 +73,18 @@ const Login = () => {
       }, {
         withCredentials: true,
       });
-      setIsSuccess(true);
       setFormState({ name: '', username: '', email: '', password: '', country: '' });
 
     } catch (error: any) {
       setBackError(error.response.data);
       console.log(backError)
-      setIsSuccess(false);
     }
   };
 
   const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { username, password } = formState;
-    const newErrors = validateForm(formState);
+    //const newErrors = validateForm(formState);
     
     try {
       await newRequest.post('auth/login', {
@@ -96,13 +94,11 @@ const Login = () => {
         withCredentials: true,
       });
       localStorage.setItem('currentUser', JSON.stringify({ username }));
-      setIsSuccess(true);
       setFormState({ name: '', username: '', email: '', password: '', country: '' });
       navigate('/gigs');
     } catch (error: any) {
       setError(error.response.data);
       console.log(error)
-      setIsSuccess(false);
     }
   };
 
