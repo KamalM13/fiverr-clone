@@ -90,8 +90,6 @@ const Login = () => {
       await newRequest.post('auth/login', {
         username,
         password,
-      }, {
-        withCredentials: true,
       });
       localStorage.setItem('currentUser', JSON.stringify({ username }));
       setFormState({ name: '', username: '', email: '', password: '', country: '' });
