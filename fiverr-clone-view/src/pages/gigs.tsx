@@ -38,11 +38,10 @@ const Gigs = () => {
   useEffect(() => {
     const getUsername = async () => {
       try {
-        const res = await newRequest.get('/users'); // Replace axios with newRequest if it's a custom instance
+        const res = await newRequest.get('/users');
         setUsername(res.data);
       } catch (error) {
         console.error('Failed to fetch username', error);
-        // Handle the error appropriately
       }
     };
 

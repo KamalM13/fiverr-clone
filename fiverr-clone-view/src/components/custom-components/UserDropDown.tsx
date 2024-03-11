@@ -14,7 +14,7 @@ interface DropdownItem {
 }
 
 interface UserDropDownProps {
-    triggerText: string;
+    triggerText: string | React.ReactNode;
     items: DropdownItem[];
 }
 

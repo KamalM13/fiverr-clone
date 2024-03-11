@@ -16,6 +16,7 @@ import { Home } from "./pages/home";
 import Gigs from "./pages/gigs";
 import Login from "./pages/login";
 import CompleteProfile from "./pages/completeProfile";
+import Gig from "./pages/gig";
 
 
 
@@ -45,6 +46,7 @@ function App() {
         { path: "/gigs", element: <Gigs /> },
         { path: "/login", element: <Login /> },
         { path: "/completeProfile", element: <CompleteProfile /> },
+        { path: `/gig/:id`, element: <Gig /> },
       ]
     },
   ]);

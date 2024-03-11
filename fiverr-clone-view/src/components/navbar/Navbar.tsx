@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom"
 
 //Customization
-import { Menu, User } from "lucide-react"
+import { Menu } from "lucide-react"
 import { useEffect, useRef, useState, } from "react"
 //import { useCookies } from "react-cookie"
 
@@ -33,11 +33,6 @@ const Navbar = () => {
         }
     }, [])
 
-    const currentUser = {
-        id: 1,
-        username: 'hi',
-        isSeller: false
-    }
 
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -78,16 +73,12 @@ const Navbar = () => {
                         <div className="hidden md:flex items-center gap-x-7">
                             <Gigsnavbar />
                             <GigsIconDropdown />
-                            <div className="text-main2 font-semibold">
-                                Orders
-                            </div>
-                            <User className="text-main2" size={20} />
+                            
+                            
                         </div>
                     ) : (
                         <div className="flex gap-6 items-center font-semibold text-lg">
-                            <RegularMenu
-                                currentUser={currentUser}
-                            />
+                            <RegularMenu/>
                         </div>
                     )}
 
@@ -101,7 +92,6 @@ const Navbar = () => {
                 {(active || pathname) !== "/" && pathname !== '/login' && <Extranavbar />}
 
             </div>
-            <hr className="border-1" />
             {menuOpen && <div className="md:hidden fixed top-0 left-0 w-screen h-screen
              bg-black opacity-50 z-10">
             </div>}

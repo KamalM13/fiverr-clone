@@ -1,11 +1,17 @@
+type Plan = {
+    name: string;
+    shortDesc: string;
+};
+
 type Gig = {
+    _id: string;
     userId: string;
     title: string;
     imgs: string[];
     about: string;
-    plan: string;
+    plans: Plan[]; // Adjusted to use an array of Plan objects
     shortTitle: string;
-    shortDesc: string;
+    shortDesc: string; // Note: This exists outside of plans, consider if it's specific enough or too general compared to the per-plan shortDesc
     price: number;
     delivery: number;
     revisions: number;
@@ -14,9 +20,9 @@ type Gig = {
     totalRating: number;
     ratingNumber: number;
     sales: number;
-    comments: any[]; // You might want to define a more specific type for comments
-    createdAt?: string; // Added from timestamps
-    updatedAt?: string; // Added from timestamps
+    comments: any[];
+    createdAt?: string;
+    updatedAt?: string;
 };
 
 // Define props for the GigCard component

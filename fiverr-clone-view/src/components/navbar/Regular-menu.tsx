@@ -3,13 +3,31 @@ import CustomDropdownMenu from "../custom-components/CustomDropdownMenu";
 import { Link, useLocation } from "react-router-dom";
 import UserDropDown from "../custom-components/UserDropDown";
 import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
+import newRequest from "@/utils/newRequest";
 
 
-interface RegularMenuProps {
-    currentUser: any; // Update with currentUser type
-}
 
-const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
+
+const RegularMenu = () => {
+
+    const [username, setUsername] = useState(null);
+    useEffect(() => {
+        const getUsername = async () => {
+            try {
+                const res = await newRequest.get('/users');
+                setUsername(res.data);
+            } catch (error) {
+                setUsername(null);
+                console.log(username)
+            }
+        };
+
+        if (!username) {
+            getUsername();
+        }
+    }, [username]);
+
     const { pathname } = useLocation()
     return (
         <div className="hidden md:flex gap-6 items-center font-semibold text-lg">
@@ -30,17 +48,22 @@ const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
                 <Globe size={20} className="pt-[1px]" />
                 English
             </div>
-            {!currentUser.isSeller && <>
-                <Link to='/'>Become a Seller</Link>
+            {username && <>
+                <Link to='/login'>Become a Seller</Link>
             </>
             }
-            { pathname === '/login' ? (
+            {(pathname !== '/login') && (!username) ? (
+                <>
+                    <Button variant="outline" size={'sm'} className="hover:bg-green-600 hover:text-white font-bold rounded-xl">Join</Button>
+                    <Link to='/login'>Sign in</Link>
+                </>
+            ) : username ? (
                 <UserDropDown
                     triggerText="Profile"
                     items={[
                         {
                             label: 'Profile',
-                            linkTo: `/profile/${currentUser.id}`
+                            linkTo: `/profile/${username}`
                         },
                         {
                             label: 'Gigs',
@@ -56,12 +79,8 @@ const RegularMenu: React.FC<RegularMenuProps> = ({ currentUser }) => {
                         },
                     ]}
                 />
-            ) : (
-                    
-                <>
-                    <Button variant="outline" size={'sm'} className="hover:bg-green-600 hover:text-white font-bold rounded-xl">Join</Button>
-                    <Link to='/login'>Sign in</Link>
-                </>
+                ) : (
+                   <div></div>     
             )}
         </div>
     );

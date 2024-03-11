@@ -1,7 +1,28 @@
+import { User } from "lucide-react"
 import GigsSingleIcon from "./GigsSingleIcon"
+import UserDropDown from "../custom-components/UserDropDown"
+import { useEffect, useState } from "react";
+import newRequest from "@/utils/newRequest";
 
 
 const GigsIconDropdown = () => {
+  const [username, setUsername] = useState(null)
+
+  useEffect(() => {
+    const getUsername = async () => {
+      try {
+        const res = await newRequest.get('/users');
+        setUsername(res.data);
+      } catch (error) {
+        console.error('Failed to fetch username', error);
+      }
+    };
+
+    if (!username) {
+      getUsername();
+    }
+  }, [username]);
+
   const notifications = {
     "messages": {
       "user1_id": ["Hello", "Hi there!"],
@@ -37,7 +58,30 @@ const GigsIconDropdown = () => {
 
       <GigsSingleIcon notifications={notifications1} gigsIconType={notifications1.gigsIconType} />
       <GigsSingleIcon notifications={notifications} gigsIconType={notifications.gigsIconType} />
-      
+      <div className="text-main2 font-semibold cursor-pointer">
+        Orders
+      </div>
+      <UserDropDown
+        triggerText={<User size={20} />}
+        items={[
+          {
+            label: 'Profile',
+            linkTo: `/profile/${username}`
+          },
+          {
+            label: 'Gigs',
+            linkTo: `/gigs`
+          },
+          {
+            label: 'Team',
+            linkTo: `/team`
+          },
+          {
+            label: 'Subscription',
+            linkTo: `/subscription`
+          },
+        ]}
+      />
     </div>
   )
 }

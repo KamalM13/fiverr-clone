@@ -18,10 +18,16 @@ const gigSchema = new Schema({
         type: String,
         required: true,
     },
-    plan: {
-        type: String,
-        required: true,
-    },
+    plans: [{
+        name: {
+            type: String,
+            required: true
+        },
+        shortDesc: {
+            type: String,
+            required: true
+        }
+    }],
     shortTitle: {
         type: String,
         required: true,

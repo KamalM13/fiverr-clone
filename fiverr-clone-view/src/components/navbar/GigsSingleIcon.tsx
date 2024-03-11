@@ -28,7 +28,7 @@ const GigsSingleIcon = ({ notifications, gigsIconType }: GigsSingleIconProps) =>
     return (
         <div>
             <HoverCard>
-                <HoverCardTrigger>
+                <HoverCardTrigger className="cursor-pointer">
                     {gigsIconType.type === 'message' ? (
                         <Mail size={20} />
                     ) : (<Bell size={20} />)}
