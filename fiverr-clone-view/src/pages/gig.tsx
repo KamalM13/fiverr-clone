@@ -1,3 +1,4 @@
+import UserRating from "@/components/userRating/userRating"
 import newRequest from "@/utils/newRequest"
 import { useQuery } from "@tanstack/react-query"
 import { Clock } from "lucide-react"
@@ -10,11 +11,12 @@ import { useParams } from "react-router-dom"
 const Gig = () => {
     const { id } = useParams()
 
+
+    // Gig request
     const { isPending, error, data } = useQuery({
         queryKey: ['gig', id],
         queryFn: async () =>
             await newRequest.get(`/gigs/single/${id}`).then((res) => {
-
                 console.log(res.data)
                 return res.data
             }),
@@ -27,16 +29,16 @@ const Gig = () => {
     return (
         <>
             {data && (
-                <div className="flex justify-center gap-x-3 p-3 ">
-                    <div className="max-w-[800px]">
+                <div className="flex justify-center gap-x-3 p-3 pt-10 ">
+                    <div className="max-w-[800px] flex flex-col gap-y-4 ">
                         <div className="font-bold text-3xl text-[#404145] ">
                             {data.title}
                         </div>
-                        <div className="profile">
-
+                        <div className="text-[#404145]">
+                            <UserRating userId={data.userId} />
                         </div>
                         <div className="carousel">
-
+                            
                         </div>
                         <div className="about">
 
