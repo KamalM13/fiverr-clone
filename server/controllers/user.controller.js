@@ -13,7 +13,17 @@ export const deleteUser = async (req, res, next) => {
     next();
 }
 
-export const getUsername = async (req, res, next) => {
+export const getUsername = async (req, res, next) => { 
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) next(createError(404, "User not found"));
+        res.status(200).json(user.username);
+    } catch (error) {
+        next(createError(404, "User not found"));
+    }
+}
+
+export const getGigUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.userId);
         if (!user) next(createError(404, "User not found"));

@@ -16,10 +16,7 @@ const Gig = () => {
     const { isPending, error, data } = useQuery({
         queryKey: ['gig', id],
         queryFn: async () =>
-            await newRequest.get(`/gigs/single/${id}`).then((res) => {
-                console.log(res.data)
-                return res.data
-            }),
+            await newRequest.get(`/gigs/single/${id}`).then((res) => {return res.data}),
     })
     
 
@@ -38,7 +35,7 @@ const Gig = () => {
                             <UserRating userId={data.userId} />
                         </div>
                         <div className="carousel">
-                            
+
                         </div>
                         <div className="about">
 

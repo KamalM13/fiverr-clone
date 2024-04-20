@@ -73,8 +73,6 @@ const Navbar = () => {
                         <div className="hidden md:flex items-center gap-x-7">
                             <Gigsnavbar />
                             <GigsIconDropdown />
-                            
-                            
                         </div>
                     ) : (
                         <div className="flex gap-6 items-center font-semibold text-lg">
