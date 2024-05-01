@@ -43,7 +43,7 @@ const Gigs = () => {
         const res = await newRequest.get('/users');
         setUsername(res.data);
       } catch (error) {
-        //navigate('/login');
+        navigate('/login');
         console.error('Failed to fetch username', error);
       }
     };

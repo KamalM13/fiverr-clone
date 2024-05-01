@@ -15,7 +15,8 @@ export const deleteUser = async (req, res, next) => {
 
 export const getUsername = async (req, res, next) => { 
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.userId);
+        console.log(req.userId)
         if (!user) next(createError(404, "User not found"));
         res.status(200).json(user.username);
     } catch (error) {
@@ -25,7 +26,7 @@ export const getUsername = async (req, res, next) => {
 
 export const getGigUser = async (req, res, next) => {
     try {
-        const user = await User.findById(req.userId);
+        const user = await User.findById(req.params.id);
         if (!user) next(createError(404, "User not found"));
         res.status(200).json(user.username);
     } catch (error) {
@@ -39,6 +40,16 @@ export const getImage = async (req, res, next) => {
         if (!user) next(createError(404, "User not found"));
         if (!user.imgURL) res.status(200).json("Undefined");
         res.status(200).json(user.imgURL);
+    } catch (error) {
+        next(createError(404, "User not found"));
+    }
+}
+
+export const getCountry = async (req, res, next) => { 
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) next(createError(404, "User not found"));
+        res.status(200).json(user.country);
     } catch (error) {
         next(createError(404, "User not found"));
     }

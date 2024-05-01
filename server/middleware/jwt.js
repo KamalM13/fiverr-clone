@@ -13,7 +13,6 @@ export const verfiyToken = (req, res, next) => {
         req.userId = payload.id;
         req.isSeller = payload.isSeller;
 
-
         next();
     });
 }

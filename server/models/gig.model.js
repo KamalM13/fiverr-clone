@@ -26,6 +26,10 @@ const gigSchema = new Schema({
         shortDesc: {
             type: String,
             required: true
+        },
+        price: {
+            type: Number,
+            required: true,
         }
     }],
     shortTitle: {
@@ -59,14 +63,17 @@ const gigSchema = new Schema({
     totalRating: {
         type: Number,
         default: 0,
+        required: false,
     },
     ratingNumber: {
         type: Number,
         default: 0,
+        required: false,
     },
     sales: {
         type: Number,
         default: 0,
+        required: false,
     },
     comments: {
         type: [],

@@ -1,7 +1,7 @@
 import newRequest from "@/utils/newRequest";
-import { Circle, CircleUser, Star, User } from "lucide-react";
+import { CircleUser, Star, } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Separator } from "../ui/separator";
+
 
 interface userRatingProps {
     userId: string;
@@ -11,7 +11,6 @@ const UserRating = ({ userId }: userRatingProps) => {
     const [imageUrl, setimageUrl] = useState('')
     const [username, setuserName] = useState('')
     const imgRequest = async () => {
-        // Fetch user data from the server
         const imgUrl = await newRequest.get(`/users/${userId}/image`).then((res) => res.data)
         if (imgUrl != "Undefined") {
             setimageUrl(imgUrl)
@@ -20,7 +19,6 @@ const UserRating = ({ userId }: userRatingProps) => {
         }
     }
     const userNameRequst = async () => {
-        // Fetch user data from the server
         const userName = await newRequest.get(`/users/${userId}`).then((res) => res.data)
         setuserName(userName)
      }

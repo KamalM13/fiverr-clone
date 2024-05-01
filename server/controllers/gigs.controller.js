@@ -1,4 +1,5 @@
 import Gig from "../models/gig.model.js"
+import User from "../models/user.model.js"
 import createError from "../utils/createError.js"
 
 export const createGig = async (req, res, next) => { 
@@ -29,15 +30,6 @@ export const deleteGig = async (req, res, next) => {
     }
 }
 
-export const getGig = async (req, res, next) => { 
-    try {
-        const gig = await Gig.findById(req.params.id)
-        if (!gig) next(createError(404, "Gig not found"))
-        res.status(200).send(gig)
-    } catch (error) {
-        next(error)
-    }
-}
 
 
 export const getGigs = async (req, res, next) => {
@@ -54,3 +46,32 @@ export const getGigs = async (req, res, next) => {
     }
     
 }
+
+export const getGig = async (req, res, next) => {
+    try {
+        const gig = await Gig.findById(req.params.id)
+        if (!gig) return res.status(404).send("Gig not found"); // Return early if gig is not found
+        res.status(200).send(gig)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const addGigComment = async (req, res, next) => {
+    try {
+        const gig = await Gig.findById(req.params.id)
+        const user = await User.findById(req.userId)
+        const username = user.username
+        if (!gig) return res.status(404).send("Gig not found"); // Return early if gig is not found
+        gig.comments.push({
+            userId: req.userId,
+            username,
+            text: req.body.comment
+        })
+        await gig.save()
+        res.status(201).json(gig.comments)
+    } catch (error) {
+        next(error)
+    }
+}
+
