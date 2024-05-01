@@ -6,7 +6,7 @@ import Gigspormotion from "@/components/gigspormotion/Gigspormotion"
 import newRequest from '@/utils/newRequest'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { LineChart } from 'lucide-react'
 
@@ -15,6 +15,8 @@ import { LineChart } from 'lucide-react'
 
 
 const Gigs = () => {
+
+  const navigate = useNavigate();
 
   const minPriceRef = useRef<HTMLInputElement>(null)
   const maxPriceRef = useRef<HTMLInputElement>(null)
@@ -41,10 +43,10 @@ const Gigs = () => {
         const res = await newRequest.get('/users');
         setUsername(res.data);
       } catch (error) {
+        navigate('/login');
         console.error('Failed to fetch username', error);
       }
     };
-
     if (!username) {
       getUsername();
     }

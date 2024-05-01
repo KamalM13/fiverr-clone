@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
+  useLocation,
 } from "react-router-dom";
 import {
   QueryClient,
@@ -17,6 +18,8 @@ import Gigs from "./pages/gigs";
 import Login from "./pages/login";
 import CompleteProfile from "./pages/completeProfile";
 import Gig from "./pages/gig";
+import Admin from "./pages/admin";
+import Sidebar from "./components/sidebar/sidebar";
 
 
 
@@ -24,14 +27,26 @@ const queryClient = new QueryClient()
 
 function App() {
 
+
   const Layout = () => {
+    const location = useLocation().pathname;
     return (
       <QueryClientProvider client={queryClient}>
         <div className="">
-          <Navbar />
-          <Outlet />
-          <Footer />
+          {location === "/admin" ? (
+            <>
+              <Sidebar />
+              <Outlet />
+            </>
+          ) : (
+            <>
+              <Navbar />
+              <Outlet />
+              <Footer />
+            </>
+          )}
         </div>
+
       </QueryClientProvider>
     )
   }
@@ -43,10 +58,11 @@ function App() {
       element: <Layout />,
       children: [
         { path: "/", element: <Home /> },
-        { path: "/gigs", element: <Gigs /> },
         { path: "/login", element: <Login /> },
-        { path: "/completeProfile", element: <CompleteProfile /> },
+        { path: "/gigs", element: <Gigs /> },
         { path: `/gig/:id`, element: <Gig /> },
+        { path: "/completeProfile", element: <CompleteProfile /> },
+        { path: "/admin", element: <Admin /> },
       ]
     },
   ]);
