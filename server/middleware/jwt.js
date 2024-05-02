@@ -11,6 +11,7 @@ export const verfiyToken = (req, res, next) => {
         if (err) return next(createError(403, "Invalid Token"));
 
         req.userId = payload.id;
+        req.username = payload.username;
         req.isSeller = payload.isSeller;
 
         next();

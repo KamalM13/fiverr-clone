@@ -9,9 +9,9 @@ type Gig = {
     title: string;
     imgs: string[];
     about: string;
-    plans: Plan[]; // Adjusted to use an array of Plan objects
+    plans: Plan[]; 
     shortTitle: string;
-    shortDesc: string; // Note: This exists outside of plans, consider if it's specific enough or too general compared to the per-plan shortDesc
+    shortDesc: string; 
     price: number;
     delivery: number;
     revisions: number;

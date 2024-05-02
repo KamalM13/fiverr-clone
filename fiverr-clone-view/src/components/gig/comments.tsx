@@ -1,24 +1,31 @@
 import newRequest from "@/utils/newRequest"
-import { Circle } from "lucide-react";
+import { Rating } from "@mui/material";
+import { Circle, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 
 interface Comments {
+    _id: string,
+    gigId: string,
     userId: string,
     text: string,
-    username: string
+    username: string,
+    rating: number
 }
 
 interface CommentsProps {
     data: Comments[]
+    refetch: () => void
 }
 
-const Comments = ({ data }: CommentsProps) => {
+const Comments = ({ data, refetch }: CommentsProps) => {
 
     const [images, setImages] = useState<string[]>([]);
-    const [countries, setCountries] = useState<string[]>([]);
-    const [flagUrls, setFlagUrls] = useState<(string | undefined | null)[]>([]);
+    const [_, setCountries] = useState<string[]>([]);
+    const [__, setFlagUrls] = useState<(string | undefined | null)[]>([]);
     const [finalFlagUrls, setFinalFlagUrls] = useState<(string)[]>([]);
+    const [userId, setUserId] = useState<string>('');
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +35,9 @@ const Comments = ({ data }: CommentsProps) => {
 
                 const fetchedImages = await Promise.all(imagePromises);
                 const fetchedCountries = await Promise.all(countryPromises);
+                userRequest()
 
+                setUserId(userId)
                 setImages(fetchedImages);
                 setCountries(fetchedCountries);
 
@@ -43,6 +52,11 @@ const Comments = ({ data }: CommentsProps) => {
 
         fetchData();
     }, [data]);
+
+    const userRequest = async () => {
+        const userId = await newRequest.get(`/users/userId`).then((res) => res.data)
+        setUserId(userId)
+    }
 
     const getImage = async (userId: string) => {
         try {
@@ -82,6 +96,18 @@ const Comments = ({ data }: CommentsProps) => {
     };
 
 
+    const deleteComment = async (gigId:string ,commentId: string) => {
+        try {
+            await newRequest.delete(`/gigs/single/${gigId}/comment/${commentId}`);
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
+    }
+    const handleDelete = async (gigId: string,commentId: string) => {
+        await deleteComment(gigId,commentId)
+        refetch()
+    }
+
     return (
         <div className="space-y-5">
             <span className="font-bold text-xl text-[#404145]">
@@ -91,16 +117,28 @@ const Comments = ({ data }: CommentsProps) => {
                 {data.map((comment, index: number) => (
                     <div key={index} className="flex gap-x-3 items-start">
                         <div className="pt-1">
-                            {images[index] !== 'Undefined' ? <img src={images[index]} alt="" className="rounded-full" /> : <Circle size={34} />}
+                            {images[index] !== '' ? <img src={images[index]} alt="" className="rounded-full" /> : <Circle size={34} />}
                         </div>
                         <div className="flex flex-col gap-y-1">
                             <span className="font-bold text-xl">{comment.username}</span>
                             <div className="flex items-center gap-x-3 text-sm ">
                                 <img src={finalFlagUrls[index]} className="w-5 h-3"></img>
-                                <span className="font-bold text-xs">{countries[index]} </span>
+                                <div className="flex items-center gap-x-1">
+                                    <Rating
+                                        name="read-only"
+                                        value={comment.rating}
+                                        precision={0.5}
+                                        readOnly
+                                        size="small"
+                                    />
+                                    <span className="font-bold text-[14px]">{comment.rating}</span>
+                                </div>
                             </div>
                             <span className="max-w-[600px] pb-3 text-lg">{comment.text}</span>
-
+                            {userId === comment.userId && <TrashIcon className="absolute left-[700px] cursor-pointer"
+                                size={13}
+                                color="red"
+                                onClick={() => handleDelete(comment.gigId,comment._id)} />}
                         </div>
                     </div>
                 ))}
