@@ -1,16 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useNavigate } from "react-router-dom";
 
 const CompleteProfile = () => {
   const [formState, setFormState] = useState({
-    bio: "",
-    phoneNumber: "",
-    role: "",
-    qualifications: "",
-    pastWork: "",
     firstName: "",
     lastName: "",
     displayName: "",
@@ -19,16 +12,16 @@ const CompleteProfile = () => {
   });
   const [error, setError] = useState([]);
   const [backError, setBackError] = useState("");
-
-  const fileInputRef = useRef<HTMLInputElement>(null); // Define fileInputRef with type HTMLInputElement
   const navigate = useNavigate();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setError([]);
     setBackError("");
-    const { id, value } = e.target; // Use id for both inputs and textarea
+    const { id, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
       [id]: value,
@@ -54,10 +47,6 @@ const CompleteProfile = () => {
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleProfilePictureClick = () => {
-    fileInputRef.current!.click();
   };
 
   return (
@@ -250,6 +239,16 @@ const CompleteProfile = () => {
         </div>
         <div></div>
         <div className="px-8"></div>
+      </div>
+      <div className=" justify-center flex py-10">
+        <Button
+          onClick={() => {
+            navigate("/personalInfo");
+          }}
+          className=" bg-green-500 text-white rounded shadow-lg hover:bg-green-400 justify-center items-center"
+        >
+          Continue
+        </Button>
       </div>
     </div>
   );
