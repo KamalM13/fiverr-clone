@@ -18,7 +18,7 @@ import { useState } from "react"
 import CountryDropDown from "@/components/login/countryDropDown"
 import newRequest from "@/utils/newRequest"
 import { useNavigate } from "react-router-dom"
-import {validateForm } from "@/utils/validateForm"
+import { validateForm } from "@/utils/validateForm"
 
 
 
@@ -33,8 +33,8 @@ const Login = () => {
   });
 
   const [error, setError] = useState<string[]>();
-  const [backError,setBackError] = useState<string>();
-  
+  const [backError, setBackError] = useState<string>();
+
   const navigate = useNavigate();
 
   const handleCountryChange = (country: string) => {
@@ -59,10 +59,10 @@ const Login = () => {
     e.preventDefault();
     const { name, username, email, password, country } = formState;
     const newErrors = validateForm(formState);
-    if (newErrors.length>0) {
+    if (newErrors.length > 0) {
       setError(newErrors);
       return;
-    } 
+    }
     try {
       await newRequest.post('auth/register', {
         name,
@@ -85,15 +85,20 @@ const Login = () => {
     e.preventDefault();
     const { username, password } = formState;
     //const newErrors = validateForm(formState);
-    
+
     try {
       await newRequest.post('auth/login', {
         username,
         password,
       });
       localStorage.setItem('currentUser', JSON.stringify({ username }));
+      if (username === 'admin') {
+        navigate('/admin');
+      }
+      else {
+        navigate('/gigs');
+      }
       setFormState({ name: '', username: '', email: '', password: '', country: '' });
-      navigate('/gigs');
     } catch (error: any) {
       setError(error.response.data);
       console.log(error)
@@ -135,7 +140,7 @@ const Login = () => {
                 <Input id="password" type="password" className="opacity-70" onChange={handleInputChange} value={formState.password} />
               </div>
               <div>
-                <p className="text-red-500 text-sm">{error?.length!>0 ? (error![0]) : (backError)}</p>
+                <p className="text-red-500 text-sm">{error?.length! > 0 ? (error![0]) : (backError)}</p>
               </div>
               <div className="space-y-1">
                 <CountryDropDown handleCountry={handleCountryChange} />

@@ -1,26 +1,35 @@
 import newRequest from "@/utils/newRequest";
-import { Circle, CircleUser, Star, User } from "lucide-react";
+import { CircleUser, Star, } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Separator } from "../ui/separator";
+import { useParams } from "react-router-dom";
+
 
 interface userRatingProps {
     userId: string;
 }
 
 const UserRating = ({ userId }: userRatingProps) => {
+
+    const {id} = useParams()
+
     const [imageUrl, setimageUrl] = useState('')
     const [username, setuserName] = useState('')
+    const [userRating, setuserRating] = useState('')
+
+    const userRatingRequest = async () => { 
+        const userRating = await newRequest.get(`/gigs/single/${id}/rating`).then((res) => res.data.rating)
+        setuserRating(userRating)
+        console.log(userRating)
+    }
     const imgRequest = async () => {
-        // Fetch user data from the server
         const imgUrl = await newRequest.get(`/users/${userId}/image`).then((res) => res.data)
-        if (imgUrl != "Undefined") {
+        if (imgUrl != '') {
             setimageUrl(imgUrl)
         } else {
             setimageUrl('')
         }
     }
     const userNameRequst = async () => {
-        // Fetch user data from the server
         const userName = await newRequest.get(`/users/${userId}`).then((res) => res.data)
         setuserName(userName)
      }
@@ -28,7 +37,8 @@ const UserRating = ({ userId }: userRatingProps) => {
     useEffect(() => {
         imgRequest()
         userNameRequst()
-    })
+        userRatingRequest()
+    },[])
 
     return (
         <div className="flex gap-y-3 ">
@@ -48,7 +58,7 @@ const UserRating = ({ userId }: userRatingProps) => {
                     </div>
                     <div className="flex bold items-center gap-x-1">
                         <Star size={15} fill="true" />
-                        <div>4.5 <span className="underline">(10)</span></div>
+                        <div>{userRating}<span className="underline">(10)</span></div>
                     </div>
                 </div>
             </div>

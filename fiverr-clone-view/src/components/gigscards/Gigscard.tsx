@@ -18,8 +18,8 @@ const Gigscard = ({ gig }: GigCardProps) => {
                 <Carousel className="  group relative">
                     <CarouselContent>
                         {Array.from({ length: 5 }).map((_, index) => (
-                            <CarouselItem key={index} className="">
-                                <div className="w-[220px] cursor-pointer"
+                            <CarouselItem  className="">
+                                <div className="w-[220px] cursor-pointer" key={index}
                                 onClick={() => window.location.href = `/gig/${gig._id}`}
                                 >
                                     {<img

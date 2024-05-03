@@ -9,7 +9,6 @@ interface CountryDropDownProps {
     handleCountry: (country: string) => void;
 }
 
-// Accept props in the function component
 const CountryDropDown = ({ handleCountry }: CountryDropDownProps) => {
     const [countries, setCountries] = useState<Country[]>([]);
     const [selectedCountry, setSelectedCountry] = useState<string>('');
@@ -30,7 +29,6 @@ const CountryDropDown = ({ handleCountry }: CountryDropDownProps) => {
     const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newSelectedCountry = event.target.value;
         setSelectedCountry(newSelectedCountry);
-        // Call the handleCountry function to return the selected country to the parent component
         handleCountry(newSelectedCountry);
     };
 

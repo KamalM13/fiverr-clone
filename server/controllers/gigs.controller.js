@@ -1,4 +1,6 @@
+import mongoose from "mongoose"
 import Gig from "../models/gig.model.js"
+import User from "../models/user.model.js"
 import createError from "../utils/createError.js"
 
 export const createGig = async (req, res, next) => { 
@@ -29,15 +31,6 @@ export const deleteGig = async (req, res, next) => {
     }
 }
 
-export const getGig = async (req, res, next) => { 
-    try {
-        const gig = await Gig.findById(req.params.id)
-        if (!gig) next(createError(404, "Gig not found"))
-        res.status(200).send(gig)
-    } catch (error) {
-        next(error)
-    }
-}
 
 
 export const getGigs = async (req, res, next) => {
@@ -54,3 +47,64 @@ export const getGigs = async (req, res, next) => {
     }
     
 }
+
+export const getGig = async (req, res, next) => {
+    try {
+        const gig = await Gig.findById(req.params.id)
+        if (!gig) return res.status(404).send("Gig not found"); 
+        res.status(200).send(gig)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const addGigComment = async (req, res, next) => {
+    try {
+        const gig = await Gig.findById(req.params.id)
+        const user = await User.findById(req.userId)
+        const username = user.username
+        if (!gig) return res.status(404).send("Gig not found"); 
+        gig.comments.push({
+            _id: new mongoose.Types.ObjectId(),
+            gigId: req.params.id,
+            userId: req.userId,
+            username,
+            rating: req.body.rating ? req.body.rating : 0,
+            text: req.body.comment
+        })
+        gig.ratingNumber += 1
+        gig.totalRating += req.body.rating
+        await gig.save()
+        res.status(201).json(gig.comments)
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const getGigRating = async (req, res, next) => { 
+    try {
+        const gig = await Gig.findById(req.params.id)
+        if (!gig) return res.status(404).send("Gig not found"); 
+        res.status(200).send({rating: (gig.totalRating / gig.ratingNumber).toFixed(1)})
+    } catch (error) {
+        next(error)
+    }
+}
+
+export const deleteGigComment = async (req, res, next) => { 
+    try {
+        const gig = await Gig.findById(req.params.id)
+        if (!gig) return res.status(404).send("Gig not found"); 
+        const comment = gig.comments.find(comment => comment._id == req.params.commentId)
+        if (!comment) return res.status(404).send("Comment not found"); 
+        if (comment.userId !== req.userId) return res.status(403).send("You can only delete your own comments")
+        gig.comments = gig.comments.filter(comment => comment._id != req.params.commentId)
+        gig.ratingNumber -= 1
+        gig.totalRating -= comment.rating
+        await gig.save()
+        res.status(200).send("Comment deleted successfully")
+    } catch (error) {
+        next(error)
+    }
+}
+
