@@ -60,3 +60,28 @@ export const getCountry = async (req, res, next) => {
         next(createError(404, "User not found"));
     }
 }
+
+export const addBillingInformation = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) next(createError(404, "User not found"));
+        user.billingInformation.push({
+            gigId: req.params.gigId,
+            ...req.body
+        });
+        await user.save();
+        res.status(200).json(user.billingInformation);
+    } catch (error) {
+        next(createError(404, "User not found"));
+    }
+}
+
+export const getBillingInformation = async (req, res, next) => { 
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) next(createError(404, "User not found"));
+        res.status(200).json(user.billingInformation);
+    } catch (error) {
+        next(createError(404, "User not found"));
+    }
+}

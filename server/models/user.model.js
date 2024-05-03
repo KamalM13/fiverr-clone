@@ -32,6 +32,22 @@ const userSchema = new Schema({
         type: String,
         required: false,
     },
+    billingInformation: [{
+        fullName: {
+            type: String,
+            required: true,
+        },
+        companyName: String,
+        stateRegion: String,
+        address: String,
+        city: String,
+        postalCode: String,
+        error: String,
+        gigId: {
+            type: String,
+            required: true,
+        }
+    }],
     isSeller: {
         type: Boolean,
         default: false,

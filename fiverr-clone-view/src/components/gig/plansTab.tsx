@@ -1,5 +1,6 @@
 import { Clock } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Plan {
     name: string;
@@ -16,8 +17,10 @@ interface Props {
     };
 }
 
-const Planstab = ({ data } : Props) => {
+const Planstab = ({ data }: Props) => {
     const [activeTab, setActiveTab] = useState(0);
+    const {id} = useParams()
+    const navigate = useNavigate()
 
     return (
         <div className="float-right sticky border-[1px] pb-3 w-[350px]">
@@ -26,7 +29,9 @@ const Planstab = ({ data } : Props) => {
                     <div
                         key={i}
                         className={`w-[120px] border-[1px] p-3 flex justify-center cursor-pointer ${activeTab === i ? 'bg-white text-black' : 'text-main2'}`}
-                        onClick={() => setActiveTab(i)}
+                        onClick={() => {
+                            setActiveTab(i)
+                        }}
                     >
                         {plan.name}
                     </div>
@@ -47,7 +52,11 @@ const Planstab = ({ data } : Props) => {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <button className="bg-black rounded-[5px] py-1 w-[300px] text-white">Continue</button>
+                    <button className="bg-black rounded-[5px] py-1 w-[300px] text-white"
+                        onClick={() => {
+                            navigate(`/gig/${id}/order/${activeTab as number}`)
+                        }}
+                    >Continue</button>
                 </div>
             </div>
         </div>

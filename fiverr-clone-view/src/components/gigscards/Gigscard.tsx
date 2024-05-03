@@ -8,8 +8,11 @@ import {
 } from "@/components/ui/carousel"
 import GigsCardDetails from "./GigsCardDetails"
 import { GigCardProps } from "../../types/gig.ts"
+import { useNavigate } from "react-router-dom"
 
 const Gigscard = ({ gig }: GigCardProps) => {
+
+    const navigate = useNavigate()
 
 
     return (
@@ -20,7 +23,7 @@ const Gigscard = ({ gig }: GigCardProps) => {
                         {Array.from({ length: 5 }).map((_, index) => (
                             <CarouselItem  className="">
                                 <div className="w-[220px] cursor-pointer" key={index}
-                                onClick={() => window.location.href = `/gig/${gig._id}`}
+                                onClick={() => navigate(`/gig/${gig._id}`)}
                                 >
                                     {<img
                                         src={gig.imgs[index]}

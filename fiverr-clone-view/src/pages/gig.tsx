@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom"
 
 const Gig = () => {
     const { id } = useParams()
-    console.log(id)
     // Gig request
     const { data, refetch } = useQuery({
         queryKey: ['gig', id],

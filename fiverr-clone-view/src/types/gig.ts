@@ -1,31 +1,24 @@
-type Plan = {
-    name: string;
-    shortDesc: string;
-};
-
-type Gig = {
-    _id: string;
+export interface Gig {
     userId: string;
     title: string;
     imgs: string[];
     about: string;
-    plans: Plan[]; 
+    plans: {
+        name: string;
+        shortDesc: string;
+        price: number;
+    }[];
     shortTitle: string;
-    shortDesc: string; 
+    shortDesc: string;
     price: number;
     delivery: number;
     revisions: number;
     features: string[];
     category: string;
-    totalRating: number;
-    ratingNumber: number;
-    sales: number;
-    comments: any[];
-    createdAt?: string;
-    updatedAt?: string;
-};
-
-// Define props for the GigCard component
-export type GigCardProps = {
-    gig: Gig;
-};
+    totalRating?: number;
+    ratingNumber?: number;
+    sales?: number;
+    comments?: any[]; // You can refine the type of comments if you have a specific structure
+    createdAt?: Date;
+    updatedAt?: Date;
+}
