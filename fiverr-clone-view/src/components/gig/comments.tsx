@@ -1,6 +1,6 @@
 import newRequest from "@/utils/newRequest"
 import { Rating } from "@mui/material";
-import { Circle, TrashIcon } from "lucide-react";
+import { Circle, PenIcon, TrashIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 
@@ -96,17 +96,47 @@ const Comments = ({ data, refetch }: CommentsProps) => {
     };
 
 
-    const deleteComment = async (gigId:string ,commentId: string) => {
+    const deleteComment = async (gigId: string, commentId: string) => {
         try {
             await newRequest.delete(`/gigs/single/${gigId}/comment/${commentId}`);
         } catch (error) {
             console.error('Error deleting comment:', error);
         }
     }
-    const handleDelete = async (gigId: string,commentId: string) => {
-        await deleteComment(gigId,commentId)
+    const handleDelete = async (gigId: string, commentId: string) => {
+        await deleteComment(gigId, commentId)
         refetch()
     }
+
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
+    const [editedText, setEditedText] = useState<string>('');
+
+    const handleEdit = (index: number, text: string) => {
+        setEditingIndex(index);
+        setEditedText(text);
+    };
+
+    const handleSave = async (index: number) => {
+        if (editedText.trim() === '') {
+            return;
+        }
+        const commentId = data[index]._id;
+        const gigId = data[index].gigId;
+        console.log(gigId, commentId)
+        try {
+            await newRequest.put(`gigs/single/${gigId}/comment/${commentId}`, { text: editedText })
+                .catch((error) => { console.error('Error updating comment:', error) });
+            setEditingIndex(null);
+            setEditedText('');
+            refetch();
+        } catch (error) {
+            console.error('Error updating comment:', error);
+        }
+
+    };
+
+
+
 
     return (
         <div className="space-y-5">
@@ -134,11 +164,42 @@ const Comments = ({ data, refetch }: CommentsProps) => {
                                     <span className="font-bold text-[14px]">{comment.rating}</span>
                                 </div>
                             </div>
-                            <span className="max-w-[600px] pb-3 text-lg">{comment.text}</span>
-                            {userId === comment.userId && <TrashIcon className="absolute left-[700px] cursor-pointer"
-                                size={13}
-                                color="red"
-                                onClick={() => handleDelete(comment.gigId,comment._id)} />}
+                            {editingIndex === index && userId === comment.userId ? (
+                                <input
+                                    type="text"
+                                    value={editedText}
+                                    onChange={(e) => setEditedText(e.target.value)}
+                                    className="max-w-[600px] pb-3 text-lg border-[1px]"
+                                />
+                            ) : (
+                                <span className="max-w-[600px] pb-3 text-lg">{comment.text}</span>
+                            )}
+                            {userId === comment.userId && (
+                                <div className="absolute flex items-center left-[700px] gap-x-3">
+                                    <TrashIcon
+                                        className="cursor-pointer"
+                                        size={13}
+                                        color="red"
+                                        onClick={() => handleDelete(comment.gigId, comment._id)}
+                                    />
+                                    {editingIndex === index ? (
+                                        <button
+                                            className="bg-[#1DBF73] text-white p-1 rounded-lg w-8 h-6 text-xs cursor-pointer"
+                                            onClick={() => handleSave(index)}
+                                        >
+                                            Save
+                                        </button>
+
+                                    ) : (
+                                        <PenIcon
+                                            size={13}
+                                            className="cursor-pointer"
+                                            color="green"
+                                            onClick={() => handleEdit(index, comment.text)}
+                                        />
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 ))}

@@ -108,3 +108,29 @@ export const deleteGigComment = async (req, res, next) => {
     }
 }
 
+export const updateGigComment = async (req, res, next) => {
+    const { id, commentId } = req.params;
+    const { text, rating } = req.body;
+
+    try {
+        const gig = await Gig.findById(id);
+        const commentIndex = gig.comments.findIndex(comment => comment._id.toString() === commentId);
+        if (commentIndex === -1) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+        if (text) {
+            gig.comments[commentIndex].text = text;
+        }
+        if (rating) {
+            gig.comments[commentIndex].rating = rating;
+        }
+        gig.markModified(`comments.${commentIndex}`);
+        await gig.save().then((res) => console.log(res));
+
+        res.json({ message: 'Comment updated successfully', comment: gig.comments[commentIndex] });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+

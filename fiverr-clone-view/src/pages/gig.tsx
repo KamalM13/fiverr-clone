@@ -31,7 +31,7 @@ const Gig = () => {
 
     useEffect(() => {
         checkIfCommentedBefore()
-    }, [data])
+    })
 
     const checkIfCommentedBefore = () => {
         if (data) {
