@@ -1,4 +1,5 @@
 export default interface Order {
+    _id: string;
     gigId: string;
     img?: string;
     title: string;

@@ -24,6 +24,7 @@ import ConfirmOrder from "./pages/confirmOrder";
 import Sidebar from "./components/sidebar/sidebar";
 import ConfirmOrderPage from "./pages/confirmOrderPage";
 import Orders from "./pages/orders";
+import { Toaster } from "sonner";
 
 
 
@@ -49,8 +50,9 @@ function App() {
               <Footer />
             </>
           )}
+          <Toaster/>
         </div>
-
+          
       </QueryClientProvider>
     )
   }
