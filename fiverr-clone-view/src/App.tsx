@@ -20,8 +20,9 @@ import CompleteProfile from "./pages/completeProfile";
 import PersonalInfo from "./pages/personalInfo";
 import Gig from "./pages/gig";
 import Admin from "./pages/admin";
-import Order from "./pages/order";
+import ConfirmOrder from "./pages/confirmOrder";
 import Sidebar from "./components/sidebar/sidebar";
+import Order from "./pages/order";
 
 
 
@@ -63,8 +64,9 @@ function App() {
         { path: "/login", element: <Login /> },
         { path: "/gigs", element: <Gigs /> },
         { path: `/gig/:id`, element: <Gig /> },
-        { path: `/gig/:id/order/:planNumber`, element: <Order /> },
+        { path: `/gig/:id/order/:planNumber`, element: <ConfirmOrder /> },
         { path: "/completeProfile", element: <CompleteProfile /> },
+        { path: "/order/:id/:planNumber/:choosenBilling", element: <Order /> },
         { path: "/admin", element: <Admin /> },
       ]
     },

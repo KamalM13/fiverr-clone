@@ -25,11 +25,9 @@ const Gig = () => {
         const userId = await newRequest.get(`/users/userId`).then((res) => res.data)
         setuserId(userId)
     }
+    
     useEffect(() => {
         userRequest()
-    })
-
-    useEffect(() => {
         checkIfCommentedBefore()
     })
 
@@ -69,7 +67,6 @@ const Gig = () => {
                                 {data.about}
                             </p>
                         </div>
-
                         <div className="User Comments">
                             <Comments
                                 data={data.comments}

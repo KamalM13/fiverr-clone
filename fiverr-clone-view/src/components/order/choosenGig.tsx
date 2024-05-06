@@ -3,13 +3,17 @@ import { useQuery } from "@tanstack/react-query"
 import { Check } from "lucide-react"
 import { Gig } from "@/types/gig"
 
-import { useParams } from "react-router-dom"
-import { Button } from "@mui/material"
+import { useNavigate, useParams } from "react-router-dom"
 
-const ChoosenGig = () => {
+interface ChoosenGigProps {
+    choosenBilling: number
+}
+
+const ChoosenGig = ({ choosenBilling }: ChoosenGigProps) => {
+    const navigate = useNavigate()
 
     const { id, planNumber } = useParams()
-    console.log(planNumber)
+
 
     const { data } = useQuery({
         queryKey: ['gig', id],
@@ -42,8 +46,13 @@ const ChoosenGig = () => {
                         ))}
                     </div>
                     <div className="flex justify-center">
-                        <button className="bg-black text-white rounded-[5px] py-1 w-[300px]">
-                            Continue
+                        <button className="bg-black text-white rounded-[5px] py-1 w-[300px]"
+                            onClick={() => {
+                                navigate(`/order/${id}/${planNumber}/${choosenBilling}`)
+                                console.log(choosenBilling)
+                            }}
+                        >
+                            Pay and Continue
                         </button>
                     </div>
                 </div>

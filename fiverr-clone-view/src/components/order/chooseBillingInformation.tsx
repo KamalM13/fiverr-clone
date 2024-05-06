@@ -11,8 +11,12 @@ interface BillingInfo {
   error: string | null;
   gigId: string;
 }
+interface BillingInfoProps {
+  setChoosenBilling: (value: number) => void
+  
+}
 
-const ChooseBillingInformation = () => {
+const ChooseBillingInformation = ({ setChoosenBilling,}: BillingInfoProps) => {
 
   const [billingInfo, setBillingInfo] = useState<BillingInfo[]>()
 
@@ -27,11 +31,11 @@ const ChooseBillingInformation = () => {
 
   const [selectedBillingIndex, setSelectedBillingIndex] = useState<Number>();
 
-  const handleUseThis = (index:number) => {
+  const handleUseThis = (index: number) => {
     setSelectedBillingIndex(index);
   };
 
-  useEffect(() => { 
+  useEffect(() => {
 
   })
 
@@ -58,7 +62,8 @@ const ChooseBillingInformation = () => {
                 <button
                   className="bg-[#f0f0f0] p-2 rounded-[3px]"
                   onClick={() => {
-                    handleUseThis(index)
+                    handleUseThis(index); 
+                    setChoosenBilling(index)
                   }}
                 >
                   Use This

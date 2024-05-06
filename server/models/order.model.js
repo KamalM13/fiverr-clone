@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
+    gig: {
+        type: Schema.Types.ObjectId,
+        ref: 'Gig'
+    },
     gigId: {
         type: String,
         required: true,
