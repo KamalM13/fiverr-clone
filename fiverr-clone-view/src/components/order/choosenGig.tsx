@@ -21,6 +21,19 @@ const ChoosenGig = ({ choosenBilling }: ChoosenGigProps) => {
             await newRequest.get(`/gigs/single/${id}`).then((res) => { return res.data as Gig }),
     })
 
+    const handleOrderCreation = async () => { 
+        try {
+            await newRequest.post('/orders/create', {
+                gigId: id,
+                price: data?.plans[Number(planNumber)]?.price,
+                billingId: choosenBilling
+            })
+            
+        }catch(e) {
+            console.log(e)
+        }
+    }
+
     return (
         <div>
             {data && (
@@ -48,8 +61,8 @@ const ChoosenGig = ({ choosenBilling }: ChoosenGigProps) => {
                     <div className="flex justify-center">
                         <button className="bg-black text-white rounded-[5px] py-1 w-[300px]"
                             onClick={() => {
+                                handleOrderCreation()
                                 navigate(`/order/${id}/${planNumber}/${choosenBilling}`)
-                                console.log(choosenBilling)
                             }}
                         >
                             Pay and Continue

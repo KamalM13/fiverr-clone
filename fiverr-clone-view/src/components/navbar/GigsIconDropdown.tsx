@@ -3,6 +3,7 @@ import GigsSingleIcon from "./GigsSingleIcon"
 import UserDropDown from "../custom-components/UserDropDown"
 import { useEffect, useState } from "react";
 import newRequest from "@/utils/newRequest";
+import { useNavigate } from "react-router-dom";
 
 
 const GigsIconDropdown = () => {
@@ -53,12 +54,18 @@ const GigsIconDropdown = () => {
   }
 
 
+  const navigate = useNavigate()
+
   return (
     <div className="flex items-center text-main2 gap-x-6">
 
       <GigsSingleIcon notifications={notifications1} gigsIconType={notifications1.gigsIconType} />
       <GigsSingleIcon notifications={notifications} gigsIconType={notifications.gigsIconType} />
-      <div className="text-main2 font-semibold cursor-pointer">
+      <div className="text-main2 font-semibold cursor-pointer"
+        onClick={() => {
+          navigate('/orders')
+        }}
+      >
         Orders
       </div>
       <UserDropDown

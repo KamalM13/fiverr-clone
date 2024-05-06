@@ -3,11 +3,12 @@ import newRequest from "@/utils/newRequest"
 import { useQuery } from "@tanstack/react-query"
 import { Gift } from "lucide-react"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 
-const Order = () => {
-
+const ConfirmOrderPage = () => {
+    
+    const navigate = useNavigate()
     const { id, planNumber, choosenBilling } = useParams()
     console.log(choosenBilling)
 
@@ -56,11 +57,15 @@ const Order = () => {
                     <span>Price: ${data && data.plans[Number(planNumber)].price}</span>
                 </div>
             </div>
-            <button className="bg-green-600 text-white p-1 px-2 rounded-[4px]">
+            <button className="bg-green-600 text-white p-1 px-2 rounded-[4px]"
+                onClick={() => { 
+                    navigate(`/orders`)
+                } }
+            >
                 Go to Orders
             </button>
         </div>
     )
 }
 
-export default Order
+export default ConfirmOrderPage

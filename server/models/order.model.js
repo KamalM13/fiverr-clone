@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-    gig: {
-        type: Schema.Types.ObjectId,
-        ref: 'Gig'
-    },
     gigId: {
         type: String,
         required: true,
@@ -34,10 +30,17 @@ const orderSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    payment: {
-        type: String,
-        required: true,
-    },
+    billingInfo:{
+        fullName: {
+            type: String,
+            required: true,
+        },
+        companyName: String,
+        stateRegion: String,
+        address: String,
+        city: String,
+        postalCode: String,
+    }
 }, {
     timestamps: true,
 });

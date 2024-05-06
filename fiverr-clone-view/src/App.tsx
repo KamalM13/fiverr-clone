@@ -22,7 +22,8 @@ import Gig from "./pages/gig";
 import Admin from "./pages/admin";
 import ConfirmOrder from "./pages/confirmOrder";
 import Sidebar from "./components/sidebar/sidebar";
-import Order from "./pages/order";
+import ConfirmOrderPage from "./pages/confirmOrderPage";
+import Orders from "./pages/orders";
 
 
 
@@ -66,7 +67,8 @@ function App() {
         { path: `/gig/:id`, element: <Gig /> },
         { path: `/gig/:id/order/:planNumber`, element: <ConfirmOrder /> },
         { path: "/completeProfile", element: <CompleteProfile /> },
-        { path: "/order/:id/:planNumber/:choosenBilling", element: <Order /> },
+        { path: "/order/:id/:planNumber/:choosenBilling", element: <ConfirmOrderPage /> },
+        {path: "/orders", element: <Orders />},
         { path: "/admin", element: <Admin /> },
       ]
     },

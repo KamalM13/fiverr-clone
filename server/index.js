@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
 import gigRoute from './routes/gigs.route.js';
+import orderRoute from './routes/order.route.js';
 
 
 const app = express();
@@ -36,7 +37,7 @@ app.use(cors({
 app.use("/server/auth", authRoute)
 app.use("/server/users", userRoute)
 app.use("/server/gigs", gigRoute)
-
+app.use("/server/orders", orderRoute)
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
