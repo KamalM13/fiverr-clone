@@ -9,6 +9,7 @@ import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
 import gigRoute from './routes/gigs.route.js';
 import orderRoute from './routes/order.route.js';
+import chatRoute from './routes/chat.route.js';
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/server/auth", authRoute)
 app.use("/server/users", userRoute)
 app.use("/server/gigs", gigRoute)
 app.use("/server/orders", orderRoute)
+app.use("/server/chat", chatRoute)
 
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;

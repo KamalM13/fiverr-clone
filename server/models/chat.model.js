@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const chatSchema = new Schema({
+
     id: {
         type: String,
         required: true,
-        unique: true,
     },
     sellerId: {
         type: String,

@@ -15,6 +15,7 @@ export const createOrder = async (req, res, next) => {
         if (!gig) {
             next(createError(404, "Gig not found"))
         }
+        gig.sales =+ 1
         const billingInfo = user.billingInformation[req.body.billingId]; 
         const order = new Order({
             gigId: gig._id,
