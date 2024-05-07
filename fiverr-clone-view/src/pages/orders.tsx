@@ -1,7 +1,7 @@
 import Order from "@/types/order"
 import newRequest from "@/utils/newRequest"
 import { useQuery } from "@tanstack/react-query"
-import { Delete, Mail, TrashIcon } from "lucide-react"
+import { Mail, TrashIcon } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -10,16 +10,15 @@ import { toast } from "sonner"
 
 const Orders = () => {
 
-    const { data,refetch } = useQuery<Order[]>({
+    const { data, refetch } = useQuery<Order[]>({
         queryKey: ['orders'],
         queryFn: async () =>
             await newRequest.get(`/orders`).then((res) => {
                 return res.data
             }),
     })
-    console.log(data)
     const navigate = useNavigate()
-    const handleDelete = async (id: string) => { 
+    const handleDelete = async (id: string) => {
         await newRequest.delete(`/orders/${id}`).then(() => {
             refetch()
             toast.success("Order Cancelled")
@@ -68,6 +67,9 @@ const Orders = () => {
                                             color="blue"
                                             size="20px"
                                             className="cursor-pointer"
+                                            onClick={() => {
+                                                navigate('/messages')
+                                             }}
                                         />
                                     </div>
                                 </td>
@@ -79,7 +81,7 @@ const Orders = () => {
                                             className="cursor-pointer"
                                             onClick={() => {
                                                 handleDelete(order._id)
-                                             }}
+                                            }}
                                         />
                                     </div>
                                 </td>

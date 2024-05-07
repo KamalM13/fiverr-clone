@@ -59,7 +59,11 @@ const GigsIconDropdown = () => {
   return (
     <div className="flex items-center text-main2 gap-x-6">
 
-      <GigsSingleIcon notifications={notifications1} gigsIconType={notifications1.gigsIconType} />
+      <div onClick={() => {
+        navigate('/messages')
+      }}>
+        <GigsSingleIcon notifications={notifications1} gigsIconType={notifications1.gigsIconType} />
+      </div>
       <GigsSingleIcon notifications={notifications} gigsIconType={notifications.gigsIconType} />
       <div className="text-main2 font-semibold cursor-pointer"
         onClick={() => {
