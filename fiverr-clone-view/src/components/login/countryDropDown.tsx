@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { RegisterForm } from './registerSection';
 
 type Country = {
     name: string;
     flags: string;
 };
 
+
 interface CountryDropDownProps {
-    handleCountry: (country: string) => void;
+    handleCountry: UseFormRegister<RegisterForm>;
 }
 
 const CountryDropDown = ({ handleCountry }: CountryDropDownProps) => {
@@ -26,11 +29,6 @@ const CountryDropDown = ({ handleCountry }: CountryDropDownProps) => {
             .catch((error) => console.error('Error fetching countries:', error));
     }, []);
 
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newSelectedCountry = event.target.value;
-        setSelectedCountry(newSelectedCountry);
-        handleCountry(newSelectedCountry);
-    };
 
     return (
         <div className='flex items-center gap-x-3'>
@@ -39,7 +37,9 @@ const CountryDropDown = ({ handleCountry }: CountryDropDownProps) => {
                     <img src={countries.find(country => country.name === selectedCountry)?.flags} alt="Country flag" className='w-[60px] h-[36px] shadow-lg rounded' />
                 </div>
             )}
-            <select value={selectedCountry} onChange={handleChange} className='w-full p-2 rounded'>
+            <select value={selectedCountry} className='w-full p-2 rounded' {...handleCountry('country', { required: true })}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+            >
                 <option value="">Select a country</option>
                 {countries.map((country, index) => (
                     <option key={index} value={country.name}>

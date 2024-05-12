@@ -35,9 +35,7 @@ const ChooseBillingInformation = ({ setChoosenBilling,}: BillingInfoProps) => {
     setSelectedBillingIndex(index);
   };
 
-  useEffect(() => {
 
-  })
 
 
   return (
