@@ -1,5 +1,6 @@
 import newRequest from "@/utils/newRequest"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 
 type LoginForm = {
@@ -8,14 +9,19 @@ type LoginForm = {
 }
 
 const LoginSection = () => {
+    const navigate = useNavigate()
 
-    const { register, handleSubmit, formState: { errors }, setError } = useForm<LoginForm>()
-    const onSubmit = (data: LoginForm) => {
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, } = useForm<LoginForm>()
+    const onSubmit = async (data: LoginForm) => {
         try {
             newRequest.post('auth/login', data).catch(err => { 
                 setError('username', { message: err.response.data })
                 setError('password', { message: err.response.data})
             })
+            setTimeout(() => {
+                navigate('/gigs');
+            }, 3000);
+            navigate('/gigs')
         } catch (err) { 
             setError('username', { message: 'Invalid username or password' })
             console.log()
@@ -39,7 +45,9 @@ const LoginSection = () => {
                 />
                 {errors.password && <span className="text-red-600">{errors.password?.message}</span>}
             </div>
-            <button type="submit" className="bg-green-500 text-white p-2 rounded-[2px]">Login</button>
+            <button type="submit" className="bg-black text-white p-2 rounded-[2px]"
+            disabled={isSubmitting}
+            >Login</button>
         </form>
     )
 }

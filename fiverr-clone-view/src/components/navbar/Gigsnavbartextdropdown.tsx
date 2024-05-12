@@ -9,7 +9,7 @@ import { Search } from "lucide-react"
 
 const Gigsnavbartextdropdown = () => {
     return (
-        <div><div className="font-semibold">
+        <div className="font-semibold">
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
@@ -42,7 +42,7 @@ const Gigsnavbartextdropdown = () => {
                 </NavigationMenuList>
             </NavigationMenu>
 
-        </div></div>
+        </div>
     )
 }
 

@@ -1,11 +1,12 @@
 import express from 'express';
 
-import { addBillingInformation, deleteUser, getBillingInformation, getCountry, getGigUser, getImage, getUserId, getUsername } from '../controllers/user.controller.js';
+import { addBillingInformation, deleteUser, getBillingInformation, getCountry, getGigUser, getImage, getUserId, getUsername, isSeller } from '../controllers/user.controller.js';
 import { verfiyToken } from '../middleware/jwt.js';
 
 const router = express.Router();
 
 router.get('/userId', verfiyToken, getUserId)
+router.get('/isSeller',verfiyToken, isSeller)
 router.get('/billingInformation', verfiyToken, getBillingInformation)
 router.delete('/:id', verfiyToken, deleteUser)
 router.get('/:id', verfiyToken, getGigUser)

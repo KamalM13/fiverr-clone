@@ -15,7 +15,6 @@ const Gigsnavbar = () => {
 
     return (
         <>
-
             <form onSubmit={handleSearch} className="flex items-center">
                 <input className="border-[1px] border-r-0 rounded-l-[5px] w-screen max-w-[550px] p-2"
                     placeholder="What service are you looking for today?"

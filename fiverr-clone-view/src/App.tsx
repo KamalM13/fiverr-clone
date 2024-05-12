@@ -26,6 +26,7 @@ import Orders from "./pages/orders";
 import { Toaster } from "sonner";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
+import CreateGig from "./pages/createGig";
 
 
 
@@ -68,6 +69,7 @@ function App() {
         { path: "/login", element: <Login /> },
         { path: "/gigs", element: <Gigs /> },
         { path: `/gig/:id`, element: <Gig /> },
+        {path: "/gig/create", element: <CreateGig />},
         { path: `/gig/:id/order/:planNumber`, element: <ConfirmOrder /> },
         { path: "/completeProfile", element: <CompleteProfile /> },
         { path: "/order/:id/:planNumber/:choosenBilling", element: <ConfirmOrderPage /> },

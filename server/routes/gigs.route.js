@@ -6,12 +6,13 @@ const router = express.Router()
 
 
 router.get('/', verfiyToken, getGigs)
+router.post('/create', verfiyToken, createGig)
 router.put('/single/:id/comment/:commentId', verfiyToken, updateGigComment)
 router.delete('/single/:id/comment/:commentId', verfiyToken, deleteGigComment)
 router.get('/single/:id', verfiyToken, getGig)
 router.post('/single/:id/comment', verfiyToken, addGigComment)
 router.get('/single/:id/rating', verfiyToken, getGigRating)
 router.delete('/:id', verfiyToken, deleteGig)
-router.post('/', verfiyToken, createGig)
+
 
 export default router;

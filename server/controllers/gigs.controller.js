@@ -3,22 +3,8 @@ import Gig from "../models/gig.model.js"
 import User from "../models/user.model.js"
 import createError from "../utils/createError.js"
 
-export const createGig = async (req, res, next) => { 
-    if (!req.isSeller) next(createError(403, "You must be a seller to create a gig"))
 
-    const gig = new Gig({
-        userId : req.userId,
-        ...req.body,
-    });
-    try {
-        const savedGig = await gig.save()
-        res.status(201).send(savedGig)
-    } catch (error) {
-    next(error)
-    }
-}
-
-export const deleteGig = async (req, res, next) => { 
+export const deleteGig = async (req, res, next) => {
     try {
         const gig = await Gig.findById(req.params.id)
         if (!gig) next(createError(404, "Gig not found"))
@@ -37,21 +23,21 @@ export const getGigs = async (req, res, next) => {
     const query = req.query
     try {
         const gigs = await Gig.find({
-            ...(query.category && {category: query.category}),
-            ...(query.search && {title: { $regex: query.search, $options: "i" }}),
-            ...((query.min || query.max) && {price: { $gte: query.min || 0, $lte: query.max}})
+            ...(query.category && { category: query.category }),
+            ...(query.search && { title: { $regex: query.search, $options: "i" } }),
+            ...((query.min || query.max) && { price: { $gte: query.min || 0, $lte: query.max } })
         })
         res.status(200).send(gigs)
-    } catch (error) { 
+    } catch (error) {
         next(error)
     }
-    
+
 }
 
 export const getGig = async (req, res, next) => {
     try {
         const gig = await Gig.findById(req.params.id)
-        if (!gig) return res.status(404).send("Gig not found"); 
+        if (!gig) return res.status(404).send("Gig not found");
         res.status(200).send(gig)
     } catch (error) {
         next(error)
@@ -63,7 +49,7 @@ export const addGigComment = async (req, res, next) => {
         const gig = await Gig.findById(req.params.id)
         const user = await User.findById(req.userId)
         const username = user.username
-        if (!gig) return res.status(404).send("Gig not found"); 
+        if (!gig) return res.status(404).send("Gig not found");
         gig.comments.push({
             _id: new mongoose.Types.ObjectId(),
             gigId: req.params.id,
@@ -81,22 +67,22 @@ export const addGigComment = async (req, res, next) => {
     }
 }
 
-export const getGigRating = async (req, res, next) => { 
+export const getGigRating = async (req, res, next) => {
     try {
         const gig = await Gig.findById(req.params.id)
-        if (!gig) return res.status(404).send("Gig not found"); 
-        res.status(200).send({rating: (gig.totalRating / gig.ratingNumber).toFixed(1)})
+        if (!gig) return res.status(404).send("Gig not found");
+        res.status(200).send({ rating: (gig.totalRating / gig.ratingNumber).toFixed(1) })
     } catch (error) {
         next(error)
     }
 }
 
-export const deleteGigComment = async (req, res, next) => { 
+export const deleteGigComment = async (req, res, next) => {
     try {
         const gig = await Gig.findById(req.params.id)
-        if (!gig) return res.status(404).send("Gig not found"); 
+        if (!gig) return res.status(404).send("Gig not found");
         const comment = gig.comments.find(comment => comment._id == req.params.commentId)
-        if (!comment) return res.status(404).send("Comment not found"); 
+        if (!comment) return res.status(404).send("Comment not found");
         if (comment.userId !== req.userId) return res.status(403).send("You can only delete your own comments")
         gig.comments = gig.comments.filter(comment => comment._id != req.params.commentId)
         gig.ratingNumber -= 1
@@ -134,3 +120,31 @@ export const updateGigComment = async (req, res, next) => {
     }
 }
 
+export const createGig = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId)
+        if (!user) return res.status(404).send("User not found")
+        if (!req.isSeller) return res.status(403).send("You must be a seller to create a gig")
+        
+        const gig = new Gig({
+            about: req.body.about,
+            category: req.body.category,
+            delivery: req.body.delivery,
+            features: req.body.features,
+            imgs: req.body.imgs,
+            plans: req.body.plans,
+            price: 0,
+            revisions: req.body.revisions,
+            shortDesc: req.body.shortDesc,
+            shortTitle: req.body.shortTitle,
+            title: req.body.title,
+            userId: req.userId,
+        })
+        await gig.save()
+        res.status(201).send(gig)
+            
+
+    } catch (error) {
+        next(error)
+    }
+}

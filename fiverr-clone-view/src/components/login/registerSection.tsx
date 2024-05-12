@@ -9,6 +9,7 @@ export type RegisterForm = {
     email: string,
     password: string,
     country: string,
+    isSeller: boolean
 }
 interface RegisterSectionProps {
     setActiveTab: (tab: string) => void
@@ -75,7 +76,12 @@ const RegisterSection = ({ setActiveTab }: RegisterSectionProps) => {
                 handleCountry={register}
             />
             {errors.country && <span className="text-red-600">Country is required</span>}
-            <button type="submit" className="bg-green-500 text-white p-2 rounded-[2px]">Register</button>
+            <div className="flex items-center gap-x-2 h-10">
+                <input type="checkbox" {...register("isSeller")} />
+                <label htmlFor="isSeller">Register as a seller</label>
+            </div>
+
+            <button type="submit" className="bg-black text-white p-2 rounded-[2px]">Register</button>
         </form>
 
     )
