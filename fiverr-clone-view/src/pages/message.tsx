@@ -59,30 +59,29 @@ const Message = () => {
                 <span className="font-semibold text-xl text-green-500 p-3">
                     Messages
                 </span>
-                {data?.length === 0 ? (<span className="text-lg">No messages yet</span>) : (
-                    <div className="flex flex-col p-10 gap-5 h-[500px] overflow-y-scroll border-[2px]">
-                        {data && data.map((message: Message, index) => {
-                            return (
-                                <div className={`flex gap-5 max-w-[600px] text-lg ${userId === message.userId && 'flex-row-reverse self-end'}`} key={index}>
-                                    <div className={`flex flex-col ${userId === message.userId ? 'bg-blue-700' : 'bg-gray-400'} text-white p-3 rounded-s-xl rounded-b-xl`}>
-                                        <span>{message.message}</span>
-                                        <span className="text-sm">{new Date(message.createdAt).toLocaleTimeString()}</span>
-                                    </div>
+                <div className="flex flex-col justify-end p-10 gap-5 h-[500px] overflow-y-scroll border-[2px]">
+                    {data && data.map((message: Message, index) => {
+                        return (
+                            <div className={`flex gap-5 max-w-[600px] text-lg ${userId === message.userId && 'flex-row-reverse self-end'}`} key={index}>
+                                <div className={`flex flex-col ${userId === message.userId ? 'bg-blue-700' : 'bg-gray-400'} text-white p-3 rounded-s-xl rounded-b-xl`}>
+                                    <span>{message.message}</span>
+                                    <span className="text-sm">{new Date(message.createdAt).toLocaleTimeString()}</span>
                                 </div>
-                            )
-                        })}
-                        <form onSubmit={(e) => { handleSubmit(e) }} className="flex justify-center">
-                            <input type="text"
-                                className="border-[2px] border-green-500 p-3 w-[800px] !outline-none"
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                            />
-                            <button type={"submit"} className="bg-green-500 px-3 text-white">
-                                Send
-                            </button>
-                        </form>
-                    </div>
-                )}
+                            </div>
+                        )
+                    })}
+                    <form onSubmit={(e) => { handleSubmit(e) }} className="flex justify-center">
+                        <input type="text"
+                            className="border-[2px] border-green-500 p-3 w-[800px] !outline-none "
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                        />
+                        <button type={"submit"} className="bg-green-500 px-3 text-white">
+                            Send
+                        </button>
+                    </form>
+                </div>
+
             </div>
 
         </div>

@@ -19,11 +19,12 @@ export const createChat = async (req, res, next) => {
         if (chat.length > 0) {
             throw new Error("Chat already exists")
         }
+        console.log(req.body.id)
         const newChat = new Chat({
             id: req.body.id,
             sellerId: req.body.sellerId,
             buyerId: req.userId,
-            lastMessage: req.body.lastMessage
+            lastMessage: req.body.lastMessage ? req.body.lastMessage : "",
         });
         const savedChat = await newChat.save();
         res.status(201).json(savedChat);

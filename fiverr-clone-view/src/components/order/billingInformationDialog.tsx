@@ -13,6 +13,7 @@ import { Button } from "../ui/button"
 import { ChangeEvent, FormEvent, useState } from "react";
 import newRequest from "@/utils/newRequest";
 import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 
 interface FormData {
@@ -69,6 +70,7 @@ const BillingInformationDialog = () => {
                 then((res) => { return res.data }).
                 catch((err) => { return err });
             console.log('Response:', response.data);
+            toast.success('Billing information added successfully, please refresh page to see changes.');
         } catch (error) {
             console.error('Error:', error);
         }
@@ -169,13 +171,14 @@ const BillingInformationDialog = () => {
                                 className="col-span-3"
                             />
                         </div>
-                        <Button type="submit" className="bg-black hover:bg-gray-900 text-white">Save changes</Button>
+                        <DialogFooter>
+                            <Button type="submit" className="bg-black hover:bg-gray-900 text-white">Save changes</Button>
+                            <DialogClose aria-label="Close">
+                                Cancel
+                            </DialogClose>
+                        </DialogFooter>
                     </form>
-                    <DialogFooter>
-                        <DialogClose aria-label="Close">
-                            Cancel
-                        </DialogClose>
-                    </DialogFooter>
+
                 </DialogContent>
             </Dialog>
         </div>

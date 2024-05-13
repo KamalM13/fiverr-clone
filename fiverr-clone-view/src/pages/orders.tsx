@@ -1,7 +1,8 @@
+import { useIsSeller } from "@/hooks/useIsSeller"
 import Order from "@/types/order"
 import newRequest from "@/utils/newRequest"
 import { useQuery } from "@tanstack/react-query"
-import { Mail, TrashIcon } from "lucide-react"
+import { Check, Mail, TrashIcon } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -9,11 +10,14 @@ import { toast } from "sonner"
 
 
 const Orders = () => {
+    
+    const isSeller = useIsSeller()
 
     const { data, refetch } = useQuery<Order[]>({
         queryKey: ['orders'],
         queryFn: async () =>
             await newRequest.get(`/orders`).then((res) => {
+                console.log(res.data)
                 return res.data
             }),
     })
@@ -23,6 +27,27 @@ const Orders = () => {
             refetch()
             toast.success("Order Cancelled")
         })
+    }
+
+    const handleComplete = async (id: string) => { 
+        await newRequest.put(`/orders/${id}`, {
+            isCompleted: true
+        }).then(() => {
+            refetch()
+            toast.success("Order Completed")
+        })
+    }
+
+    const handleChatCreation = async (index: number) => {
+        try {
+            newRequest.post(`/chat`, {
+                id: data ? data[index].buyerId + data[index].sellerId : "",
+                buyerId: data ? data[index].buyerId : "",
+                sellerId: data ? data[index].sellerId : "",
+            }).then(() => { })
+        } catch (error) {
+            console.error('Failed to create chat', error);
+        }
     }
     return (
         <div className="flex justify-center p-10">
@@ -35,10 +60,11 @@ const Orders = () => {
                         <th>Price</th>
                         <th>Contact</th>
                         <th>Cancel</th>
+                        {isSeller && <th>Complete</th>}
                     </tr>
                 </thead>
                 <tbody>
-                    {data && data.map((order) => {
+                    {data && data.map((order, index) => {
                         return (
                             <tr key={order.gigId} className="bg-green-100">
                                 <td className="p-5">
@@ -68,8 +94,12 @@ const Orders = () => {
                                             size="20px"
                                             className="cursor-pointer"
                                             onClick={() => {
-                                                navigate('/messages')
-                                             }}
+                                                handleChatCreation(index)
+                                                setTimeout(() => {
+                                                    navigate('/messages')
+                                                },3000)
+                                                
+                                            }}
                                         />
                                     </div>
                                 </td>
@@ -81,6 +111,18 @@ const Orders = () => {
                                             className="cursor-pointer"
                                             onClick={() => {
                                                 handleDelete(order._id)
+                                            }}
+                                        />
+                                    </div>
+                                </td>
+                                <td className="p-5">
+                                    <div className="flex justify-center">
+                                        <Check
+                                            color="green"
+                                            size="19px"
+                                            className="cursor-pointer"
+                                            onClick={() => {
+                                                handleComplete(order._id)
                                             }}
                                         />
                                     </div>
