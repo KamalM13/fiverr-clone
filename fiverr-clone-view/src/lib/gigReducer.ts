@@ -4,14 +4,14 @@ type Action =
     | { type: 'UPDATE_FIELD'; field: keyof Gig; value: any }
     | { type: 'RESET' }
     | { type: 'ADD_FEATURE', value: string }
-    | { type: 'REMOVE_FEATURE'; index: Number }
+    | { type: 'REMOVE_FEATURE', index: Number }
     | { type: 'ADD_PLAN'; value: any }
-
+    | { type: 'ADD_IMAGE'; value: string }; // New action for adding images
 
 export const initialState: Gig = {
     userId: '',
     title: '',
-    imgs: [],
+    imgs: [], // Ensure this field exists in your Gig type
     about: '',
     plans: [],
     shortTitle: '',
@@ -21,7 +21,12 @@ export const initialState: Gig = {
     revisions: 0,
     features: [],
     category: '',
+    totalRating: 0,
+    ratingNumber: 0,
+    sales: 0,
+    comments: [],
 };
+
 export interface Plan {
     name: string;
     shortDesc: string;
@@ -36,29 +41,12 @@ export function gigReducer(state: Gig, action: Action): Gig {
                 [action.field]: action.value,
             };
         case 'RESET':
-            return {
-                userId: '',
-                title: '',
-                imgs: [],
-                about: '',
-                plans: [],
-                shortTitle: '',
-                shortDesc: '',
-                price: 0,
-                delivery: 0,
-                revisions: 0,
-                features: [],
-                category: '',
-                totalRating: 0,
-                ratingNumber: 0,
-                sales: 0,
-                comments: [],
-            };
+            return initialState; // Simplified reset to initialState
         case 'ADD_FEATURE':
             return {
                 ...state,
                 features: [...state.features, action.value],
-            }
+            };
         case 'REMOVE_FEATURE':
             return {
                 ...state,
@@ -68,6 +56,11 @@ export function gigReducer(state: Gig, action: Action): Gig {
             return {
                 ...state,
                 plans: [...state.plans, action.value],
+            };
+        case 'ADD_IMAGE': // Handling image addition
+            return {
+                ...state,
+                imgs: [...state.imgs, action.value],
             };
         default:
             return state;

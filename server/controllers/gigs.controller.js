@@ -1,7 +1,9 @@
 import mongoose from "mongoose"
 import Gig from "../models/gig.model.js"
 import User from "../models/user.model.js"
+import Image from "../models/image.model.js"
 import createError from "../utils/createError.js"
+
 
 
 export const deleteGig = async (req, res, next) => {
@@ -125,7 +127,7 @@ export const createGig = async (req, res, next) => {
         const user = await User.findById(req.userId)
         if (!user) return res.status(404).send("User not found")
         if (!req.isSeller) return res.status(403).send("You must be a seller to create a gig")
-        
+
         const gig = new Gig({
             about: req.body.about,
             category: req.body.category,
@@ -142,9 +144,26 @@ export const createGig = async (req, res, next) => {
         })
         await gig.save()
         res.status(201).send(gig)
-            
+
 
     } catch (error) {
         next(error)
+    }
+}
+
+
+
+export const uploadImage = async (req, res, next) => {
+    try {
+        //console.log(req.file.path)
+        const image = new Image({
+            img: req.file.path,
+            userId: req.userId
+        })
+        await image.save()
+        console.log(image)
+        res.status(201).send(image.img)
+    } catch (error) {
+        next(error);
     }
 }

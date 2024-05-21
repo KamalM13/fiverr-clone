@@ -1,10 +1,12 @@
 import Carousel from "react-multi-carousel"
 
-interface GigCarouselProps { 
+interface GigCarouselProps {
     imgs: string[]
 }
 
-const GigCarousel = ({imgs} : GigCarouselProps) => {
+const GigCarousel = ({ imgs }: GigCarouselProps) => {
+    console.log(imgs)
+    const backendUrl = 'http://localhost:3000/';
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1080 },
@@ -37,10 +39,9 @@ const GigCarousel = ({imgs} : GigCarouselProps) => {
             removeArrowOnDeviceType={["tablet", "mobile"]}
 
         >
-            {imgs.map((_, index) => (
-
+            {imgs.map((img, index) => (
                 <div className="relative" key={index}>
-                    <img src={imgs[index]} alt="" className="" />
+                    <img src={`${backendUrl}${img}`} alt="" className="" />
                 </div>
 
             ))}

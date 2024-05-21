@@ -3,6 +3,9 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 
 //Routes
 import authRoute from './routes/auth.route.js';
@@ -41,13 +44,16 @@ app.use("/server/gigs", gigRoute)
 app.use("/server/orders", orderRoute)
 app.use("/server/chat", chatRoute)
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use((err, req, res, next) => {
     const errorStatus = err.status || 500;
     const errorMessage = err.message || "Something went wrong";
 
     res.status(errorStatus).send(errorMessage);
 })
-
 app.listen(3000, () => {
     connect();
   console.log('Server is running on port 3000');

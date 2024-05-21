@@ -1,7 +1,7 @@
 import { gigReducer, initialState, Plan } from "@/lib/gigReducer";
 import { Gig } from "@/types/gig";
 import newRequest from "@/utils/newRequest";
-import  { useReducer } from "react";
+import { useReducer } from "react";
 
 const CreateGig = () => {
     const [state, dispatch] = useReducer(gigReducer, initialState);
@@ -13,8 +13,8 @@ const CreateGig = () => {
         e.preventDefault();
         console.log(state);
         try {
-         newRequest.post('/gigs/create', state)   
-        }catch(err){
+            newRequest.post('/gigs/create', state)
+        } catch (err) {
             console.log(err)
         }
     }
@@ -33,7 +33,27 @@ const CreateGig = () => {
         dispatch({ type: "ADD_PLAN", value: newPlan });
     }
 
+    const handleCoverImage = async (e:any) => {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
 
+        try {
+            const response = await newRequest.post('/gigs/uploadImage', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log(response.data)
+            if (response.data) {
+                dispatch({ type: 'UPDATE_FIELD', field: 'imgs', value: response.data });
+            } else {
+                console.error('Image upload failed');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    };
     return (
         <div>
             <div className="flex justify-center">
@@ -65,7 +85,8 @@ const CreateGig = () => {
                                 <label className="text-main2 font-bold">Cover Image</label>
                                 <input
                                     type="file"
-                                    onChange={(e) => { }}
+                                    accept="image/*"
+                                    onChange={handleCoverImage}
                                 />
                                 <label className="text-main2 font-bold">Upload More Images</label>
                                 <input
