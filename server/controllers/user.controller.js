@@ -95,3 +95,22 @@ export const getBillingInformation = async (req, res, next) => {
         next(createError(404, "User not found"));
     }
 }
+
+export const getUserInfo = async (req, res, next) => { 
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) next(createError(404, "User not found"));
+        res.status(200).json({
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            img: user.imgURL,
+            password: user.password,
+            country: user.country,
+            isSeller: user.isSeller
+
+        });
+    } catch (error) {
+        next(createError(404, "User not found"));
+    }
+}

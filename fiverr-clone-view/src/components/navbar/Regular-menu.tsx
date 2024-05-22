@@ -77,6 +77,14 @@ const RegularMenu = () => {
                             label: 'Orders',
                             linkTo: `/orders`
                         },
+                        {
+                            label: 'My Gigs',
+                            linkTo: `/userGigs`
+                        },
+                        {
+                            label: 'Logout',
+                            linkTo: `/logout`
+                        }
                     ]}
                 />
                 ) : (

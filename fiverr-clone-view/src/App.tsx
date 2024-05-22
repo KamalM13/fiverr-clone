@@ -27,6 +27,9 @@ import { Toaster } from "sonner";
 import Messages from "./pages/messages";
 import Message from "./pages/message";
 import CreateGig from "./pages/createGig";
+import Profile from "./pages/profile";
+import Logout from "./pages/logout";
+import SellerGigs from "./pages/sellerGigs";
 
 
 
@@ -69,7 +72,7 @@ function App() {
         { path: "/login", element: <Login /> },
         { path: "/gigs", element: <Gigs /> },
         { path: `/gig/:id`, element: <Gig /> },
-        {path: "/gig/create", element: <CreateGig />},
+        { path: "/gig/create", element: <CreateGig /> },
         { path: `/gig/:id/order/:planNumber`, element: <ConfirmOrder /> },
         { path: "/completeProfile", element: <CompleteProfile /> },
         { path: "/order/:id/:planNumber/:choosenBilling", element: <ConfirmOrderPage /> },
@@ -77,6 +80,9 @@ function App() {
         { path: "/messages", element: <Messages /> },
         { path: "/messages/:id", element: <Message /> },
         { path: "/admin", element: <Admin /> },
+        { path: "/profile/:id", element: <Profile /> },
+        { path: '/logout', element: <Logout /> },
+        {path: '/userGigs', element: <SellerGigs />}
       ]
     },
   ]);

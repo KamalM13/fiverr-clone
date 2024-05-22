@@ -31,7 +31,7 @@ const GigsCardDetails = ({ gig }: GigCardProps) => {
                 </div>
             </div>
             <div className="font-bold">
-                From ${gig.price}
+                From ${gig.plans[0].price}
             </div>
         </div>
     )

@@ -82,13 +82,21 @@ const GigsIconDropdown = () => {
             linkTo: `/gigs`
           },
           {
-            label: 'Team',
-            linkTo: `/team`
+            label: 'Messages',
+            linkTo: `/messages`
           },
           {
-            label: 'Subscription',
-            linkTo: `/subscription`
+            label: 'Orders',
+            linkTo: `/orders`
           },
+          {
+            label: 'My Gigs',
+            linkTo: `/userGigs`
+          },
+          {
+            label: 'Logout',
+            linkTo: `/logout`
+          }
         ]}
       />
     </div>

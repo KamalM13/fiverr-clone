@@ -1,4 +1,4 @@
-import { addGigComment, createGig, deleteGig, deleteGigComment, getGig, getGigRating, getGigs, updateGigComment, uploadImage } from '../controllers/gigs.controller.js';
+import { addGigComment, createGig, deleteGig, deleteGigComment, getGig, getGigRating, getGigs, getUserGigs, updateGigComment, uploadImage } from '../controllers/gigs.controller.js';
 import { verifyToken } from '../middleware/jwt.js';
 import express from "express"
 import multer from "multer"
@@ -17,6 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.get('/', verifyToken, getGigs)
+router.get('/gigsUser', verifyToken, getUserGigs)
 router.post('/uploadImage', verifyToken, upload.single('image') , uploadImage)
 router.post('/create', verifyToken, createGig)
 router.put('/single/:id/comment/:commentId', verifyToken, updateGigComment)

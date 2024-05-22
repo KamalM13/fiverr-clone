@@ -11,21 +11,19 @@ type LoginForm = {
 const LoginSection = () => {
     const navigate = useNavigate()
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, } = useForm<LoginForm>()
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<LoginForm>()
     const onSubmit = async (data: LoginForm) => {
         try {
-            newRequest.post('auth/login', data).catch(err => { 
-                setError('username', { message: err.response.data })
-                setError('password', { message: err.response.data})
+            newRequest.post('auth/login', data).then(() => {
+                navigate('/gigs')
+            }).catch((error) => {
+                setError('username', { message: 'Invalid username or password' })
+                console.log(error)
+                setError('password', { message: 'Invalid username or password' })
             })
-            setTimeout(() => {
-                navigate('/gigs');
-            }, 3000);
-            navigate('/gigs')
-        } catch (err) { 
-            setError('username', { message: 'Invalid username or password' })
-            console.log()
-            setError('password', { message: 'Invalid username or password' })
+            //navigate('/gigs')
+        } catch (error) { 
+            
         }
     }
 

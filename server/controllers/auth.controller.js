@@ -12,12 +12,12 @@ export const register = async (req, res, next) => {
         if (user) return next(createError(401, "Username already exists"));
         const email = await User.findOne({ email: req.body.email });
         if (email) return next(createError(401, "Email already exists"));
-
+        console.log(req.body)
         const newUser = new User({
             ...req.body,
             password: hash,
         })
-        
+
         await newUser.save();
         res.status(201).send(newUser);
     } catch (err) {
@@ -28,8 +28,10 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
-        if (!user) next(createError(404, "User not found"));
-
+        if (!user) {
+            next(createError(404, "User not found"));
+            return
+        }
         const validPassword = await bcrypt.compareSync(req.body.password, user.password);
         if (!validPassword) next(createError(400, "Invalid credentials"));
 
@@ -43,6 +45,7 @@ export const login = async (req, res, next) => {
             httpOnly: true,
         }).status(200).json(info);
 
+
     } catch (error) {
         next(error);
     }
@@ -50,9 +53,25 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res) => {
 
     if (!req.cookies.accessToken) return res.status(400).send("You are not logged in");
-    
+
     res.clearCookie("accessToken", {
         sameSite: "none",
         secure: true,
     }).status(200).send("Logged out");
 }
+
+export const updateUser = async (req, res, next) => {
+    try {
+        const updates = { ...req.body };
+        if (req.body.password) {
+            updates.password = await bcrypt.hash(req.body.password, 10);
+        }
+        const updatedUser = await User.findByIdAndUpdate(req.userId, {
+            $set: updates,
+        }, { new: true });
+        console.log(updatedUser)
+        res.status(200).send(updatedUser);
+    } catch (error) {
+        next(error);
+    }
+};

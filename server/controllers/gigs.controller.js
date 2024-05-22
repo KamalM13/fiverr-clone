@@ -19,7 +19,14 @@ export const deleteGig = async (req, res, next) => {
     }
 }
 
-
+export const getUserGigs = async (req, res, next) => { 
+    try {
+        const gigs = await Gig.find({ userId: req.userId })
+        res.status(200).send(gigs)
+    } catch (error) {
+        next(error)
+    }
+}
 
 export const getGigs = async (req, res, next) => {
     const query = req.query;
@@ -30,7 +37,7 @@ export const getGigs = async (req, res, next) => {
 
         const filter = {
             ...(query.category && { category: query.category }),
-            ...(query.search && { title: { $regex: query.search, $options: "i" } }),
+            ...(query['?search'] && { title: { $regex: query['?search'], $options: "i" } }),
             ...((query.min || query.max) && { price: { $gte: query.min || 0, $lte: query.max } })
         };
 

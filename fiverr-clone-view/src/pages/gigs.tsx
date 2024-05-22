@@ -19,6 +19,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Gig } from '@/types/gig'
 
 
 
@@ -28,11 +29,7 @@ import {
 const Gigs = () => {
 
 
-  const fetchGigs = async () => {
-    const response = await newRequest.get(`/gigs?page=${pagination}&${search}`);
-    console.log(response.data)
-    return response.data;
-  };
+
 
   const navigate = useNavigate();
 
@@ -45,18 +42,34 @@ const Gigs = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ['gigs'],
     queryFn: async () =>
-      fetchGigs(),
+      await newRequest.get(`/gigs?page=${pagination}&${search}`).then((res) => {
+        return res.data
+      }),
   })
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await refetch();
+      console.log(data);
+    };
+
+    fetchData();
+  }, [pagination]);
+
   const handlePageChange = (newPage: number) => {
+    console.log(newPage);
     setPagination(newPage);
-    refetch();
+    console.log(pagination);
   };
 
   let span = search.split('=')[1]
   useEffect(() => {
-    refetch()
+    const fetchData = async () => { 
+      await refetch()
+    }
+    fetchData()
     span = search.split('=')[1]
+    console.log(span)
   }, [search])
 
   const [username, setUsername] = useState(null);
@@ -134,7 +147,7 @@ const Gigs = () => {
             {isPending ? <SkeletonGigs /> :
               error ?
                 <div>error</div> :
-                data?.gigs.map((item: any) => <GigsCard key={item.id} gig={item} />)}
+                data?.gigs.map((item: Gig, index: number) => <GigsCard key={index} gig={item} />)}
           </div>
         </div>
         <Pagination>
@@ -143,9 +156,13 @@ const Gigs = () => {
               <PaginationPrevious href="#" onClick={() => handlePageChange(pagination - 1 > 0 ? pagination - 1 : 1)} />
             </PaginationItem>
 
-            {data?.totalPages > 1 && data?.totalPages < 4 && [...Array(data?.totalPages + 1).keys()].map((i) => (
-              <PaginationItem key={i}>
-                <PaginationLink className={`${pagination == i + 1 && 'bg-gray-100'} hover:bg-gray-200`} href="#" onClick={() => handlePageChange(i + 1)}>{i + 1}</PaginationLink>
+            {data?.totalPages > 1 && data?.totalPages < 4 && [...Array(data?.totalPages).keys()].map((i) => (
+              <PaginationItem key={i + 1}>
+                <PaginationLink
+                  className={`${pagination == i + 1 && 'bg-gray-100'} hover:bg-gray-200`}
+                  href="#" onClick={() => handlePageChange(i + 1)}>
+                  {i + 1}
+                </PaginationLink>
               </PaginationItem>
             ))}
             {data?.totalPages >= 3 && <PaginationEllipsis />}

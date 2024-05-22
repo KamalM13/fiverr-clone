@@ -115,6 +115,7 @@ const CreateGig = () => {
                                     id=""
                                     placeholder="Detailed description of your service"
                                     onChange={handleChange}
+                                    className="w-[300px] h-[350px] border border-gray-300 rounded-[5px] px-3 py-2"
                                 ></textarea>
                                 <button onClick={handleSubmit} >Create</button>
                             </div>
@@ -143,7 +144,7 @@ const CreateGig = () => {
                             <div className="flex flex-col gap-y-2">
 
                                 <label className="text-main2 font-bold">Delivery Time (e.g. 1 day)</label>
-                                <input type="number" name="delivery" onChange={handleChange}
+                                <input type="number" name="delivery" min={0} onChange={handleChange}
                                     className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2" />
                             </div>
                             <div className="flex flex-col gap-y-2">
@@ -152,6 +153,7 @@ const CreateGig = () => {
                                     type="number"
                                     name="revisions"
                                     onChange={handleChange}
+                                    min={0}
                                     className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2"
                                 />
                             </div>
@@ -194,28 +196,30 @@ const CreateGig = () => {
                                         <button type="submit" className="bg-black text-white px-2">Add</button>
                                         : ""
                                     }
+                                    <div className="flex flex-col p-1" >
+                                        {state.plans.map((plan, index) => (
+                                            <div className="flex justify-between items-center" key={index}>
+                                                <div className="w-[10px]">{plan.name}</div>
+                                                <div>{plan.price}</div>
+                                                <button
+                                                    onClick={() =>
+                                                        dispatch({ type: "REMOVE_PLAN", index })
+                                                    }
+                                                >X</button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="flex flex-col gap-y-2">
+                                        <label htmlFor="" className="text-main2 font-bold">Price</label>
+                                        <input type="number" onChange={handleChange} name="price"
+                                            className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2"
+                                        />
+                                    </div>
                                 </form>
 
-                                <div className="flex flex-col p-1" >
-                                    {state.plans.map((plan, index) => (
-                                        <div className="flex justify-between items-center" key={index}>
-                                            <div className="w-[10px]">{plan.name}</div>
-                                            <div>{plan.price}</div>
-                                            <button
-                                                onClick={() =>
-                                                    dispatch({ type: "REMOVE_PLAN", index })
-                                                }
-                                            >X</button>
-                                        </div>
-                                    ))}
-                                </div>
+                                
                             </div>
-                            <div className="flex flex-col gap-y-2">
-                                <label htmlFor="" className="text-main2 font-bold">Price</label>
-                                <input type="number" onChange={handleChange} name="price"
-                                    className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2"
-                                />
-                            </div>
+
                         </div>
                     </div>
                 </div>
