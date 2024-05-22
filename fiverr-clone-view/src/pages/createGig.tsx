@@ -1,7 +1,7 @@
 import { gigReducer, initialState, Plan } from "@/lib/gigReducer";
 import { Gig } from "@/types/gig";
 import newRequest from "@/utils/newRequest";
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CreateGig = () => {
@@ -115,7 +115,6 @@ const CreateGig = () => {
                                 <input
                                     type="file"
                                     multiple
-                                    onChange={(e) => { }}
                                 />
                                 <button //onClick={handleUpload}
                                     className="bg-black text-white px-5 py-1 rounded-[5px]"
