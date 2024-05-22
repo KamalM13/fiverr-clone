@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { LineChart } from 'lucide-react'
+import { Gig } from '@/types/gig'
 
 
 
@@ -22,7 +23,7 @@ const Gigs = () => {
   const maxPriceRef = useRef<HTMLInputElement>(null)
 
   const { search } = useLocation()
-  const { isPending, error, data, refetch } = useQuery({
+  const { isPending, error, data, refetch } = useQuery<Gig[]>({
     queryKey: ['gigs'],
     queryFn: async () =>
       await newRequest.get(`/gigs${search}`).then((res) => {

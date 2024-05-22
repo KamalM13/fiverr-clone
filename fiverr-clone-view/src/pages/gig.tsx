@@ -82,6 +82,8 @@ const Gig = () => {
                     </div>
                     <div className="">
                         <Planstab
+                            userId={userId}
+                            gigUserId = {data.userId}
                             data={{ plans: data.plans, shortTitle: data.shortTitle, price: data.price, delivery: data.delivery }}
                         />
                     </div>

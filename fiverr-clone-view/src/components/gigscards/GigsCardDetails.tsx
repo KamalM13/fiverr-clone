@@ -1,8 +1,10 @@
 import { Circle, Star } from "lucide-react"
 
+interface GigCardProps {
+    gig: Gig
+}
 
-
-import { GigCardProps } from "../../types/gig.ts"
+import { Gig } from "../../types/gig.ts"
 
 const GigsCardDetails = ({ gig }: GigCardProps) => {
     return (
@@ -22,7 +24,7 @@ const GigsCardDetails = ({ gig }: GigCardProps) => {
             <div className="flex items-center gap-x-1 font-bold text-sm">
                 <Star size={14} fill="" />
                 <div className="rating">
-                    {gig.ratingNumber.toFixed(1)}
+                    {gig.ratingNumber && gig.ratingNumber.toFixed(1)}
                 </div>
                 <div className=" text-[#74767e]">
                     ({gig.sales})

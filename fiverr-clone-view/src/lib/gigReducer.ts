@@ -6,9 +6,11 @@ type Action =
     | { type: 'ADD_FEATURE', value: string }
     | { type: 'REMOVE_FEATURE', index: Number }
     | { type: 'ADD_PLAN'; value: any }
-    | { type: 'ADD_IMAGE'; value: string }; // New action for adding images
+    | { type: 'ADD_IMAGE'; value: string }
+    | { type: 'REMOVE_PLAN'; index: Number };
 
 export const initialState: Gig = {
+    _id: '',
     userId: '',
     title: '',
     imgs: [], // Ensure this field exists in your Gig type
@@ -52,6 +54,12 @@ export function gigReducer(state: Gig, action: Action): Gig {
                 ...state,
                 features: state.features.filter((_, i) => i !== Number(action.index)),
             };
+        case 'REMOVE_PLAN':
+            return {
+                ...state,
+                plans: state.plans.filter((_, i) => i !== Number(action.index)),
+            };
+        
         case 'ADD_PLAN':
             return {
                 ...state,

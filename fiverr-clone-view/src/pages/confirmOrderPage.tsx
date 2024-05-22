@@ -48,7 +48,7 @@ const ConfirmOrderPage = () => {
                 </div>
             </div>
             <div className="bg-green-800 text-white p-8 grid grid-cols-[auto,1fr,auto] gap-x-3 items-center w-[600px]">
-                <img src={data?.imgs[0]} className="w-[140px] h-[120px]" />
+                <img src={`http://localhost:3000/${data?.imgs[0]}`} className="w-[140px] h-[120px]" />
                 <div className="flex flex-col">
                     <span className="max-w-[300px]">Name: {data && data.title}</span>
                     <span>Qty: 1</span>

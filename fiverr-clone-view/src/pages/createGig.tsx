@@ -1,10 +1,12 @@
 import { gigReducer, initialState, Plan } from "@/lib/gigReducer";
 import { Gig } from "@/types/gig";
 import newRequest from "@/utils/newRequest";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateGig = () => {
     const [state, dispatch] = useReducer(gigReducer, initialState);
+    const navigate = useNavigate();
     const handleChange = (e: any) => {
         const { name, value } = e.target;
         dispatch({ type: 'UPDATE_FIELD', field: name as keyof Gig, value });
@@ -13,7 +15,9 @@ const CreateGig = () => {
         e.preventDefault();
         console.log(state);
         try {
-            newRequest.post('/gigs/create', state)
+            newRequest.post('/gigs/create', state).then(res => {
+                navigate(`/gig/${res.data}`)
+            })
         } catch (err) {
             console.log(err)
         }
@@ -21,19 +25,22 @@ const CreateGig = () => {
     const handleFeature = (e: any) => {
         e.preventDefault();
         dispatch({ type: "ADD_FEATURE", value: e.target[0].value });
+        e.target[0].value = "";
     }
     const handlePlan = (e: any) => {
         e.preventDefault();
-        console.log(e.target[0].value)
         const newPlan: Plan = {
             name: e.target[0].value,
             shortDesc: e.target[1].value,
             price: parseInt(e.target[2].value),
         };
         dispatch({ type: "ADD_PLAN", value: newPlan });
+        e.target[0].value = ""
+        e.target[1].value = ""
+        e.target[2].value = ""
     }
 
-    const handleCoverImage = async (e:any) => {
+    const handleCoverImage = async (e: any) => {
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('image', file);
@@ -154,7 +161,6 @@ const CreateGig = () => {
                                 >
                                     <input type="text" placeholder="Page design"
                                         className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2" />
-                                    <button type="submit" className="bg-black text-white px-2">Add</button>
                                 </form>
                             </div>
                             <div className="">
@@ -169,7 +175,7 @@ const CreateGig = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div>
+                            <div className="w-[300px]">
                                 <label className="text-main2 font-bold">Plans</label>
                                 <form className="flex flex-col gap-y-2 p-1" onSubmit={handlePlan}>
                                     <input type="text" name="planName"
@@ -184,18 +190,22 @@ const CreateGig = () => {
                                         className="w-[300px] h-[50px] border border-gray-300 rounded-[5px] px-3 py-2"
                                         placeholder="Price"
                                     />
-                                    <button type="submit" className="bg-black text-white px-2">Add</button>
+                                    {state?.plans?.length < 3 ?
+                                        <button type="submit" className="bg-black text-white px-2">Add</button>
+                                        : ""
+                                    }
                                 </form>
 
-                                <div className="flex flex-col" >
-                                    <div className="flex justify-between">
-                                        <div className="text-main2 font-bold">Plan Name</div>
-                                        <div className="text-main2 font-bold">Price</div>
-                                    </div>
+                                <div className="flex flex-col p-1" >
                                     {state.plans.map((plan, index) => (
-                                        <div className="flex justify-between w-full" key={index}>
-                                            <div >{plan.name}</div>
+                                        <div className="flex justify-between items-center" key={index}>
+                                            <div className="w-[10px]">{plan.name}</div>
                                             <div>{plan.price}</div>
+                                            <button
+                                                onClick={() =>
+                                                    dispatch({ type: "REMOVE_PLAN", index })
+                                                }
+                                            >X</button>
                                         </div>
                                     ))}
                                 </div>

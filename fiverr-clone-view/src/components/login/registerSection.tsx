@@ -17,12 +17,23 @@ interface RegisterSectionProps {
 
 const RegisterSection = ({ setActiveTab }: RegisterSectionProps) => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>()
+    const { register, handleSubmit, formState: { errors,isSubmitting }, setError,  } = useForm<RegisterForm>()
 
-    const onSubmit: SubmitHandler<RegisterForm> = data => {
+    const onSubmit: SubmitHandler<RegisterForm> = async data => {
         try {
-            newRequest.post('auth/register', data)
-            toast.success('Registration successful')
+            await newRequest.post('auth/register', data).catch(err => {
+                console.log(err)
+                if (err.response.status === 401) {
+                    console.log(err.response.data)
+                    if(err.response.data === 'Username already exists') {
+                        setError('username', { message: 'Username already exists' })
+                    }
+                    if (err.response.data === 'Email already exists') {
+                        setError('email', { message: 'Email already exists' })
+                    }
+                }
+            })
+            toast.success('Account created successfully')
             setActiveTab('login')
         } catch (err) {
             console.error(err)
@@ -31,27 +42,28 @@ const RegisterSection = ({ setActiveTab }: RegisterSectionProps) => {
 
     return (
 
-        <form className="flex flex-col gap-y-4 w-[400px] border-x-2 border-b-2 border-green-500 p-3 " onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-y-4 w-[400px] p-3 " onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-2">
+                {errors.root && <span className="text-red-600">{errors.root.message}</span>}
                 <label htmlFor="name">Fullname</label>
                 <input type="text" placeholder="Name" {...register("name", { required: true })}
                     className="border border-gray-300 p-2 focus:outline-none focus:border-green-500 rounded-[2px]"
                 />
-                {errors.name && <span className="text-red-600">Name is required</span>}
+                {errors.name && <span className="text-red-600">{ errors.name.message }</span>}
             </div>
             <div className="flex flex-col gap-y-2">
                 <label htmlFor="username">Username</label>
                 <input type="text" placeholder="Username" {...register("username", { required: true })}
                     className="border border-gray-300 p-2 focus:outline-none focus:border-green-500 rounded-[2px]"
                 />
-                {errors.username && <span className="text-red-600">Username is required</span>}
+                {errors.username && <span className="text-red-600">{errors.username.message }</span>}
             </div>
             <div className="flex flex-col gap-y-2">
                 <label htmlFor="email">Email</label>
                 <input type="email" placeholder="Email" {...register("email", { required: true })}
                     className="border border-gray-300 p-2 focus:outline-none focus:border-green-500 rounded-[2px]"
                 />
-                {errors.email && <span className="text-red-600">Email is required</span>}
+                {errors.email && <span className="text-red-600">{errors.email.message} </span>}
             </div>
             <div className="flex flex-col gap-y-2">
                 <label htmlFor="password">Password</label>
@@ -81,7 +93,7 @@ const RegisterSection = ({ setActiveTab }: RegisterSectionProps) => {
                 <label htmlFor="isSeller">Register as a seller</label>
             </div>
 
-            <button type="submit" className="bg-black text-white p-2 rounded-[2px]">Register</button>
+            <button type="submit" className="bg-green-500 text-white p-2 rounded-[2px]" disabled={isSubmitting}>Register</button>
         </form>
 
     )

@@ -69,7 +69,7 @@ const Orders = () => {
                             <tr key={order.gigId} className="bg-green-100">
                                 <td className="p-5">
                                     <div className="flex justify-center">
-                                        <img src={order.img} className="w-[60px] h-[60px]" />
+                                        <img src={`http://localhost:3000/${order.img}`} className="w-[60px] h-[60px]" />
                                     </div>
                                 </td>
                                 <td className="">

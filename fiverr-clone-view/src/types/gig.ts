@@ -1,4 +1,5 @@
 export interface Gig {
+    _id: string;
     userId: string;
     title: string;
     imgs: string[];

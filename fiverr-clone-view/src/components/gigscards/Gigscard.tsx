@@ -7,12 +7,17 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel"
 import GigsCardDetails from "./GigsCardDetails"
-import { GigCardProps } from "../../types/gig.ts"
-import { useNavigate } from "react-router-dom"
 
-const Gigscard = ({ gig }: GigCardProps) => {
+import { useNavigate } from "react-router-dom"
+import { Gig } from "@/types/gig"
+
+interface GigscardProps {
+    gig: Gig;
+}
+const Gigscard = ({ gig }: GigscardProps) => {
 
     const navigate = useNavigate()
+    const backendUrl = 'http://localhost:3000/';
 
 
     return (
@@ -21,12 +26,12 @@ const Gigscard = ({ gig }: GigCardProps) => {
                 <Carousel className="  group relative">
                     <CarouselContent>
                         {Array.from({ length: 5 }).map((_, index) => (
-                            <CarouselItem  className="">
+                            <CarouselItem className="">
                                 <div className="w-[220px] cursor-pointer" key={index}
-                                onClick={() => navigate(`/gig/${gig._id}`)}
+                                    onClick={() => navigate(`/gig/${gig._id}`)}
                                 >
                                     {<img
-                                        src={gig.imgs[index]}
+                                        src={`${backendUrl}${gig.imgs[index]}`}
                                         alt={gig.shortTitle}
                                         className="w-[220px] h-[150px] object-cover rounded-t-[10px]"
                                     />

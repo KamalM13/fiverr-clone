@@ -30,7 +30,7 @@ const LoginSection = () => {
     }
 
     return (
-        <form className="flex flex-col gap-y-4 w-[400px] border-x-2 border-b-2 border-green-500 p-3 " onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-y-4 w-[400px] p-3 drop-shadow-sm " onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-y-2">
                 <label htmlFor="username">Username</label>
                 <input type="text" placeholder="Username" {...register("username", { required: true })}
@@ -45,7 +45,7 @@ const LoginSection = () => {
                 />
                 {errors.password && <span className="text-red-600">{errors.password?.message}</span>}
             </div>
-            <button type="submit" className="bg-black text-white p-2 rounded-[2px]"
+            <button type="submit" className="bg-green-500 text-white p-2 rounded-[2px]"
             disabled={isSubmitting}
             >Login</button>
         </form>

@@ -13,13 +13,13 @@ const Login = () => {
 
   return (
     <div className="h-[740px]  flex flex-col items-center drop-shadow-sm ">
-      <div className="w-[400px] flex justify-between border-2 border-green-500">
-        <div className={`w-full p-2 flex justify-center ${activeTab === 'login' ? 'bg-green-500 text-white' : ''}`}>
+      <div className="w-[400px] flex justify-between border-2 border-black drop-shadow-md bg-black p-1 rounded-[5px]">
+        <div className={`w-full rounded-[5px] p-2 flex justify-center ${activeTab === 'login' ? 'bg-green-500 text-white' : 'text-white'}`}>
           <button onClick={() => setActiveTab('login')} className="w-full">
             Login
           </button>
         </div>
-        <div className={`w-full p-2 flex justify-center ${activeTab === 'register' ? 'bg-green-500 text-white' : ''}`}>
+        <div className={`w-full rounded-[5px] p-2 flex justify-center ${activeTab === 'register' ? 'bg-green-500 text-white' : 'text-white'}`}>
           <button onClick={() => setActiveTab('register')} className="w-full">
             Register
           </button>

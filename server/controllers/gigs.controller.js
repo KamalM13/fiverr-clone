@@ -126,7 +126,7 @@ export const createGig = async (req, res, next) => {
     try {
         const user = await User.findById(req.userId)
         if (!user) return res.status(404).send("User not found")
-        if (!req.isSeller) return res.status(403).send("You must be a seller to create a gig")
+        if (!user.isSeller) return res.status(403).send("You must be a seller to create a gig")
 
         const gig = new Gig({
             about: req.body.about,
@@ -143,7 +143,7 @@ export const createGig = async (req, res, next) => {
             userId: req.userId,
         })
         await gig.save()
-        res.status(201).send(gig)
+        res.status(201).send(gig._id)
 
 
     } catch (error) {

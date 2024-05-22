@@ -15,11 +15,13 @@ interface Props {
         price: number;
         delivery: number;
     };
+    userId: string;
+    gigUserId: string;
 }
 
-const Planstab = ({ data }: Props) => {
+const Planstab = ({ data, userId, gigUserId }: Props) => {
     const [activeTab, setActiveTab] = useState(0);
-    const {id} = useParams()
+    const { id } = useParams()
     const navigate = useNavigate()
 
     return (
@@ -51,13 +53,16 @@ const Planstab = ({ data }: Props) => {
                         </p>
                     </div>
                 </div>
-                <div className="flex justify-center">
-                    <button className="bg-black rounded-[5px] py-1 w-[300px] text-white"
-                        onClick={() => {
-                            navigate(`/gig/${id}/order/${activeTab as number}`)
-                        }}
-                    >Continue</button>
-                </div>
+                {userId !== gigUserId &&
+                    <div className="flex justify-center">
+                        <button className="bg-black rounded-[5px] py-1 w-[300px] text-white"
+                            onClick={() => {
+                                navigate(`/gig/${id}/order/${activeTab as number}`)
+                            }}
+                        >Continue</button>
+                    </div>
+                }
+
             </div>
         </div>
     );

@@ -39,7 +39,7 @@ const ChoosenGig = ({ choosenBilling }: ChoosenGigProps) => {
             {data && (
                 <div className="w-[350px] bg-[#fafafa] space-y-6 p-3">
                     <div className="flex items-center gap-x-3 p-1 ">
-                        <img src={data.imgs[0]} alt="" className="w-24 h-24 " />
+                        <img src={`http://localhost:3000/${data.imgs[0]}`} alt="" className="w-24 h-24 " />
                         <span className="text-sm font-bold text-[#62646a] max-w-[200px]">{data.title}</span>
                     </div>
                     <div className="flex justify-between font-bold text-[#62646a] ">
