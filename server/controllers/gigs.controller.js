@@ -22,19 +22,40 @@ export const deleteGig = async (req, res, next) => {
 
 
 export const getGigs = async (req, res, next) => {
-    const query = req.query
+    const query = req.query;
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 16;
+
     try {
-        const gigs = await Gig.find({
+
+        const filter = {
             ...(query.category && { category: query.category }),
             ...(query.search && { title: { $regex: query.search, $options: "i" } }),
             ...((query.min || query.max) && { price: { $gte: query.min || 0, $lte: query.max } })
-        })
-        res.status(200).send(gigs)
-    } catch (error) {
-        next(error)
-    }
+        };
 
-}
+
+        const totalGigs = await Gig.countDocuments(filter);
+
+
+        const skip = (page - 1) * limit;
+
+
+        const gigs = await Gig.find(filter)
+            .skip(skip)
+            .limit(limit);
+        
+        res.status(200).send({
+            totalGigs,
+            page,
+            limit,
+            totalPages: Math.ceil(totalGigs / limit),
+            gigs
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 export const getGig = async (req, res, next) => {
     try {

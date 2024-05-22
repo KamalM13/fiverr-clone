@@ -70,12 +70,12 @@ const RegularMenu = () => {
                             linkTo: `/gigs`
                         },
                         {
-                            label: 'Team',
-                            linkTo: `/team`
+                            label: 'Messages',
+                            linkTo: `/messages`
                         },
                         {
-                            label: 'Subscription',
-                            linkTo: `/subscription`
+                            label: 'Orders',
+                            linkTo: `/orders`
                         },
                     ]}
                 />

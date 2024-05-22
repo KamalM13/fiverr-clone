@@ -9,7 +9,17 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { LineChart } from 'lucide-react'
-import { Gig } from '@/types/gig'
+
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+
 
 
 
@@ -17,19 +27,32 @@ import { Gig } from '@/types/gig'
 
 const Gigs = () => {
 
+
+  const fetchGigs = async () => {
+    const response = await newRequest.get(`/gigs?page=${pagination}&${search}`);
+    console.log(response.data)
+    return response.data;
+  };
+
   const navigate = useNavigate();
 
   const minPriceRef = useRef<HTMLInputElement>(null)
   const maxPriceRef = useRef<HTMLInputElement>(null)
 
+  const [pagination, setPagination] = useState<number>(1)
+
   const { search } = useLocation()
-  const { isPending, error, data, refetch } = useQuery<Gig[]>({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ['gigs'],
     queryFn: async () =>
-      await newRequest.get(`/gigs${search}`).then((res) => {
-        return res.data
-      }),
+      fetchGigs(),
   })
+
+  const handlePageChange = (newPage: number) => {
+    setPagination(newPage);
+    refetch();
+  };
+
   let span = search.split('=')[1]
   useEffect(() => {
     refetch()
@@ -105,10 +128,32 @@ const Gigs = () => {
           </div>
         </div>
       </div>
-      <div className='flex justify-center'>
-        <div className="hidden md:grid md:grid-cols-4 gap-y-10 gap-x-10">
-          {isPending ? <SkeletonGigs /> : error ? <div>error</div> : data?.map((item: any) => <GigsCard key={item.id} gig={item} />)}
+      <div className='space-y-5'>
+        <div className='flex justify-center'>
+          <div className="hidden md:grid md:grid-cols-4 gap-y-10 gap-x-10">
+            {isPending ? <SkeletonGigs /> :
+              error ?
+                <div>error</div> :
+                data?.gigs.map((item: any) => <GigsCard key={item.id} gig={item} />)}
+          </div>
         </div>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" onClick={() => handlePageChange(pagination - 1 > 0 ? pagination - 1 : 1)} />
+            </PaginationItem>
+
+            {data?.totalPages > 1 && data?.totalPages < 4 && [...Array(data?.totalPages + 1).keys()].map((i) => (
+              <PaginationItem key={i}>
+                <PaginationLink className={`${pagination == i + 1 && 'bg-gray-100'} hover:bg-gray-200`} href="#" onClick={() => handlePageChange(i + 1)}>{i + 1}</PaginationLink>
+              </PaginationItem>
+            ))}
+            {data?.totalPages >= 3 && <PaginationEllipsis />}
+            <PaginationItem>
+              <PaginationNext href="#" onClick={() => handlePageChange(pagination + 1 < data.totalPages ? pagination + 1 : data.totalPages)} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </>
 
