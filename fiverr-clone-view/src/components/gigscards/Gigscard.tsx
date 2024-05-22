@@ -18,7 +18,7 @@ const Gigscard = ({ gig }: GigscardProps) => {
 
     const navigate = useNavigate()
     const backendUrl = 'http://localhost:3000/';
-
+    console.log(backendUrl + gig.imgs[0])
 
     return (
         <div className="relative flex flex-col justify-center space-y-3 max-w-[220px] ">

@@ -7,6 +7,7 @@ interface GigCarouselProps {
 const GigCarousel = ({ imgs }: GigCarouselProps) => {
     console.log(imgs)
     const backendUrl = 'http://localhost:3000/';
+    console.log(backendUrl+ imgs[0])
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1080 },
@@ -41,7 +42,7 @@ const GigCarousel = ({ imgs }: GigCarouselProps) => {
         >
             {imgs.map((img, index) => (
                 <div className="relative" key={index}>
-                    <img src={`${backendUrl}${img}`} alt="" className="" />
+                    <img src={`${backendUrl}${img}`} alt="" className="w-[1300px] h-[600px] " />
                 </div>
 
             ))}

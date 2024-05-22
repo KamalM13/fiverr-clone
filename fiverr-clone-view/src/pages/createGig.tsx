@@ -40,27 +40,36 @@ const CreateGig = () => {
         e.target[2].value = ""
     }
 
-    const handleCoverImage = async (e: any) => {
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('image', file);
+    const handleCoverImages = async (e: any) => {
+        const files = e.target.files;
+        const promises = [];
 
-        try {
-            const response = await newRequest.post('/gigs/uploadImage', formData, {
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            const uploadPromise = newRequest.post('/gigs/uploadImage', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(response.data)
-            if (response.data) {
-                dispatch({ type: 'UPDATE_FIELD', field: 'imgs', value: response.data });
-            } else {
-                console.error('Image upload failed');
-            }
+            promises.push(uploadPromise);
+        }
+
+        try {
+            const responses = await Promise.all(promises);
+            const imageUrls = responses.map(response => response.data);
+
+            imageUrls.forEach(imageUrl => {
+                dispatch({ type: 'ADD_IMAGE', value: imageUrl });
+            });
         } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error('Error uploading images:', error);
         }
     };
+
+
     return (
         <div>
             <div className="flex justify-center">
@@ -85,6 +94,12 @@ const CreateGig = () => {
                                     <option value="web">Web Development</option>
                                     <option value="animation">Animation</option>
                                     <option value="music">Music</option>
+                                    <option value="writing">Writing</option>
+                                    <option value="video">Video Editing</option>
+                                    <option value="marketing">Marketing</option>
+                                    <option value="programming">Programming</option>
+                                    <option value="business">Business</option>
+                                    <option value="lifestyle">Lifestyle</option>
                                 </select>
                             </div>
 
@@ -93,7 +108,8 @@ const CreateGig = () => {
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    onChange={handleCoverImage}
+                                    multiple
+                                    onChange={handleCoverImages}
                                 />
                                 <label className="text-main2 font-bold">Upload More Images</label>
                                 <input
@@ -217,7 +233,7 @@ const CreateGig = () => {
                                     </div>
                                 </form>
 
-                                
+
                             </div>
 
                         </div>
