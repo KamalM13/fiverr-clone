@@ -17,7 +17,7 @@ const CreateGig = () => {
         try {
             newRequest.post('/gigs/create', state).then(res => {
                 navigate(`/gig/${res.data}`)
-            })
+            }) 
         } catch (err) {
             console.log(err)
         }

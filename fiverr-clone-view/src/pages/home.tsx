@@ -1,4 +1,5 @@
-import CustomCarousel from "@/components/custom-components/CustomCarousel"
+
+import CustomCarousel from "@/components/heropage/CustomCarousel"
 import Featured from "@/components/heropage/Featured"
 
 import HeroMarketing from "@/components/heropage/Hero-marketing"

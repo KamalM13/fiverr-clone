@@ -1,46 +1,37 @@
-import { Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import {
     HoverCard,
     HoverCardContent,
     HoverCardTrigger,
 } from "@/components/ui/hover-card"
-import { v4 as uuidv4 } from 'uuid';
+import data from '@/utils/categories.json'
 
 
+
+interface CategoriesType {
+    [category: string]: {
+        [subCategory: string]: string[];
+    };
+}
 
 const Extranavbar = () => {
 
-
-    const objects = ["Graphics & Design", "Video & Animation", "Writing & Translation", "AI Services", "Digital Marketing",
-        "Music & Audio", "Programming & Tech", "Business", "Lifestyle"]
-    
-    const categories = ["Design", "Video", "Writing", "AI", "Marketing", "Music", "Programming", "Business", "Lifestyle"]
-
+    const categories: CategoriesType = data;
     return (
         <>
             <hr className="hidden md:inline w-full border-1 " />
             <div className="hidden md:flex w-full px-4 md:px-7 justify-between text-gray-500 pt-2">
-                {objects.map((object, idx) => (
-                    <HoverCard key={idx}>
-                        <HoverCardTrigger className="cursor-pointer hover:border-b-4 border-green-500 pb-2 hover:pb-1">{object}</HoverCardTrigger>
-                        <HoverCardContent>
-                            <div className="" key={idx}>
-                                <div className="bg-white w-screen grid grid-cols-4 justify-between items-center gap-x-10 p-3">
-                                    {Array.from({ length: 4 }).map((_, index) => (
-                                        <div key={uuidv4()} className="flex flex-col gap-y-2 p-2 text-lg">
-                                            <p className="font-bold">Logo & Brand Identity</p>
-                                            {Array.from({ length: 5 }).map((_, innerIndex) => (
-                                                <Link to={'/gigs?category=' + categories[idx]} key={uuidv4()} className="hover:text-gray-400"> Logo Design</Link>
-                                            ))}
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="bg-white w-screen grid grid-cols-4 justify-between items-center gap-x-10 p-3">
-                                    {Array.from({ length: 4 }).map((_, index) => (
-                                        <div key={uuidv4()} className="flex flex-col gap-y-2 p-2 text-lg">
-                                            <p className="font-bold">Logo & Brand Identity</p>
-                                            {Array.from({ length: 5 }).map((_, innerIndex) => (
-                                                <Link to={'/gigs?category=' + categories[idx]} key={uuidv4()} className="hover:text-gray-400"> Logo Design</Link>
+                {Object.keys(categories).map((mainCategory) => (
+                    <HoverCard key={mainCategory}>
+                        <HoverCardTrigger className="cursor-pointer font-semibold text-sm hover:border-b-4 border-green-500 pb-2 hover:pb-1">{mainCategory}</HoverCardTrigger>
+                        <HoverCardContent className="overflow-y-scroll h-[500px]">
+                            <div className="h-[100px] " key={mainCategory}>
+                                <div className="bg-white w-screen h-100 flex flex-wrap basis-1 p-3 items-between gap-x-3">
+                                    {Object.keys(categories[mainCategory]).map((subCategory, index) => (
+                                        <div key={index} className="flex flex-col gap-y-2 p-2 text-lg w-[220px] h-min ">
+                                            <p className="font-bold">{subCategory}</p>
+                                            {categories[mainCategory][subCategory].map((service, idx) => (
+                                                <Link to={'/gigs?category=' + categories[idx]} key={idx} className="hover:text-gray-400">{service}</Link>
                                             ))}
                                         </div>
                                     ))}
@@ -50,7 +41,7 @@ const Extranavbar = () => {
                     </HoverCard>
                 ))}
             </div>
-            <hr className="hidden md:inline w-full border-1 " />
+            <hr className="hidden md:inline w-full border-1"/>
         </>
     )
 }

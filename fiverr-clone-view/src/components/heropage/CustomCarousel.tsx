@@ -112,7 +112,7 @@ export default function CustomCarousel() {
             {items.map((_, index) => (
 
                 <div className="p-6 relative" key={index}>
-                    <Link to="/">
+                    <Link to="/gigs">
                         <div className="absolute top-6 left-2 p-3 ml-3 text-3xl text-white font-semibold">
                             {items[index].name}
                         </div>
